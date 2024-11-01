@@ -4,10 +4,24 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">¡Lo sentimos pero los datos ingresados no son correctos!</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content class="ion-padding">
+  <ion-card class="error-card">
+    <ion-card-header>
+      <ion-card-title>Lo siento</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <p>Los datos esperados no fueron correctos.</p>
+    </ion-card-content>
+  </ion-card>
+  <div class="image-container">
+    <img src="../../../assets/img/abajo-pulgar.jpg" alt="">
+  </div>
+
+  <ion-content class="ion-padding">
+    <div class="centered-button" >
+      <ion-button expand="full" (click)="irALogin()" color="secondary">
+        Volver al Login
+      </ion-button>
+    </div>
+  </ion-content>
 </ion-content>
