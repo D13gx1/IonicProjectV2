@@ -11,15 +11,19 @@
   </app-qrwebscanner >
   
   <app-welcome 
-    *ngIf="selectedComponent === 'welcome'">
+    *ngIf="selectedComponent === 'codigo-qr'">
   </app-welcome>
 
   <app-dinosaur 
-    *ngIf="selectedComponent === 'dinosaur'">
+    *ngIf="selectedComponent === 'mi-clase'">
   </app-dinosaur>
 
   <app-forum 
     *ngIf="selectedComponent === 'forum'">
+  </app-forum>
+
+  <app-forum 
+  *ngIf="selectedComponent === 'mis-datos'">
   </app-forum>
 
 </ion-content>

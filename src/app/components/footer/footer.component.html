@@ -3,14 +3,14 @@
     <ion-segment 
       value="welcome" 
       (ionChange)="sendClickEvent($event)"
-      [(ngModel)]="selectedButton"
-    >
-      <ion-segment-button value="welcome">
+      [(ngModel)]="selectedButton">
+
+      <ion-segment-button value="codigo-qr">
         <ion-icon name="home-outline"></ion-icon>
         {{ "HomePage.Button.CodigoQr" | translate }}
       </ion-segment-button>
       
-      <ion-segment-button #dinoButton value="dinosaur">
+      <ion-segment-button #dinoButton value="mi-clase">
         <ion-icon name="paw-outline"></ion-icon>
         {{ "HomePage.Button.MyClass" | translate }}
       </ion-segment-button>
@@ -20,7 +20,7 @@
         {{ "HomePage.Button.Forum" | translate }}
       </ion-segment-button>
 
-      <ion-segment-button value="forum">
+      <ion-segment-button value="mis-datos">
         <ion-icon name="document-lock-outline"></ion-icon>
         {{ "HomePage.Button.Datos"| translate }}
       </ion-segment-button>
