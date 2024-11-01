@@ -16,12 +16,12 @@ import { Router } from '@angular/router';
   styleUrls: ['./map.page.scss'],
   standalone: true,
   imports: [
-      CommonModule    // CGV-Permite usar directivas comunes de Angular
-    , FormsModule     // CGV-Permite usar formularios
-    , IonicModule     // CGV-Permite usar componentes de Ionic como IonContent, IonItem, etc.
-    , TranslateModule // CGV-Permite usar pipe 'translate'
-    , HeaderComponent // CGV-Permite usar el componente Header
-    , FooterComponent // CGV-Permite usar el componente Footer
+      CommonModule,
+      FormsModule,
+      IonicModule,
+      TranslateModule,
+      HeaderComponent,
+      FooterComponent
   ]
 })
 export class MapPage implements OnInit {
@@ -33,9 +33,8 @@ export class MapPage implements OnInit {
   constructor(
     private geo: GeoService, 
     private http: HttpClient,
-  private router: Router) { 
-
-  }
+    private router: Router
+  ) {}
 
   ngOnInit() {
     this.loadMap();
@@ -45,7 +44,6 @@ export class MapPage implements OnInit {
   async loadMap() {
     await this.geo.getCurrentPosition().then((position: { lat: number, lng: number } | null) => {
       if (position) {
-        
         // Configuramos el centro del mapa y el nivel de zoom
         this.map = L.map('mapId').setView([position.lat, position.lng], 50);
 
@@ -60,7 +58,7 @@ export class MapPage implements OnInit {
         console.log('Posición geográfica desconocida');
       }
     }).catch((error) => {
-      console.log('Error al obtener la posición geográfica');
+      console.log('Error al obtener la posición geográfica', error);
     });
   }
 
@@ -72,16 +70,17 @@ export class MapPage implements OnInit {
     this.geo.getCurrentPosition().then((position: { lat: number, lng: number } | null) => {
       if (position) {
         this.goToPosition(position.lat, position.lng, 50, 'Mi ubicación');
+        this.getMyAddress(position.lat, position.lng); // Añadido para mostrar la dirección
       }
     });
   }
 
   goToPosition(lat: number, lng: number, zoom: number, popupText: string) {
     if (this.map) {
-      // Centrar el mapa en Santiago
+      // Centrar el mapa en las coordenadas proporcionadas
       this.map.setView([lat, lng], zoom);
 
-      // Agregar un marcador en las coordenadas de Santiago
+      // Agregar un marcador en las coordenadas proporcionadas
       const marker = L.marker([lat, lng]).addTo(this.map);
       marker.bindPopup(popupText).openPopup();
     }
@@ -93,7 +92,7 @@ export class MapPage implements OnInit {
         this.addressName = value.display_name;
       },
       error: (error: any) => {
-        console.log(error);
+        console.log('Error al obtener la dirección', error);
         this.addressName = '';
       }
     });
@@ -103,44 +102,43 @@ export class MapPage implements OnInit {
     this.geo.getCurrentPosition().then((position: { lat: number, lng: number } | null) => {
       if (position) {
         this.goToPosition(position.lat, position.lng, 50, 'Mi ubicación');
-        this.getRoute({ lat: position.lat, lng: position.lng }
-            , { lat: -33.44703, lng: -70.65762 }, "walking");
+        this.getRoute({ lat: position.lat, lng: position.lng }, { lat: -33.44703, lng: -70.65762 }, "walking");
       }
     });
   }
 
   getRoute(start: { lat: number, lng: number }, end: { lat: number, lng: number }, mode: 'driving' | 'walking') {
-    // URL de la API de OSRM para obtener la ruta, cambiamos el modo de transporte dinámicamente (driving o walking)
     const url = `https://router.project-osrm.org/route/v1/${mode}/${start.lng},${start.lat};${end.lng},${end.lat}?overview=full&geometries=geojson`;
-    console.log(url);
-  
-    // Realizamos una solicitud HTTP para obtener la ruta
+
     this.http.get(url).subscribe((response: any) => {
-      if (this.map) {
+      if (this.map && response.routes.length) {
         const routeCoords = response.routes[0].geometry.coordinates;
-  
+
         // Convertimos las coordenadas de la ruta en formato Leaflet
         const routeLatLngs = routeCoords.map((coord: [number, number]) => [coord[1], coord[0]]);
-  
+
         // Dibujamos la línea de la ruta en el mapa
         const routeLine = L.polyline(routeLatLngs, { color: 'blue', weight: 5 }).addTo(this.map);
-  
+        
         // Ajustamos el mapa para que la ruta sea visible en la pantalla
         this.map.fitBounds(routeLine.getBounds());
-  
+
         // Extraer la distancia y la duración de la respuesta
         const distance = response.routes[0].distance / 1000; // Distancia en kilómetros
         const duration = response.routes[0].duration / 60;   // Duración en minutos
 
-        this.distance = `Distancia: ${distance.toFixed(2)} km `
-            + `, Estimado: ${duration.toFixed(2)} minutos`;
+        this.distance = `Distancia: ${distance.toFixed(2)} km, Estimado: ${duration.toFixed(2)} minutos`;
+      } else {
+        console.error('No se encontraron rutas');
+        this.distance = 'No se encontró una ruta válida.';
       }
-
+    }, (error) => {
+      console.error('Error al obtener la ruta', error);
+      this.distance = 'Error al obtener la ruta.';
     });
   }
 
   fixLeafletIconPath() {
-    // Sobrescribimos las rutas de los iconos de Leaflet
     const iconDefault = L.icon({
       iconUrl: 'assets/leaflet/images/marker-icon.png',
       shadowUrl: 'assets/leaflet/images/marker-shadow.png',
@@ -150,7 +148,6 @@ export class MapPage implements OnInit {
   }
 
   navegarMisDatos() {
-    //this.router.navigate(['/mis-datos']);
+    this.router.navigate(['/mis-datos']);
   }
-
 }

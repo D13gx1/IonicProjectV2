@@ -15,7 +15,7 @@ export const loginGuard: CanActivateFn = async (route, state) => {
 
   if (await authService.isAuthenticated()) {
     // Si el usuario está autenticado lo deja entrar a la página de inicio
-    router.navigate(['/tabs/codigo-qr']);
+    router.navigate(['/home']);
 
     // Pero se niega la entrada a la página de ingreso
     return false;
