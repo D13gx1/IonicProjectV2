@@ -16,8 +16,6 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
-
-  <img class="background-image" src="/assets/images/bronto-portrait-04.jpg">
   
   <h1 class="glow-text show-in-portrait margin-top-6"> {{ 'AppName' | translate }} </h1>
 
@@ -67,9 +65,10 @@
 </ion-content>
 
 <ion-footer>
-  <ion-button color="primary" shape="block" (click)="registerNewUser()">
-    {{ 'Login.Button.Signin' | translate }}
+  <ion-button color="primary" shape="block" (click)="goRute()">
+    {{ 'Login.Button.rute' | translate }}
   </ion-button>
+
   <ion-button color="secondary" shape="block" (click)="passwordRecovery()">
     {{ 'Login.Button.ForgotPassword' | translate }}
   </ion-button>

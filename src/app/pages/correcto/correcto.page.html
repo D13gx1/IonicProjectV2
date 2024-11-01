@@ -1,0 +1,30 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>Correcto</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <ion-card *ngIf="user" class="user-card">
+    <ion-card-header>
+      <ion-card-title>¡Felicidades!</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <p class="password-text">Tu contraseña es:</p>
+      <h2 class="password">{{ password }}</h2> <!-- Muestra la contraseña -->
+      <div>
+        <img src="../../../assets/img/pulgaaar.jpg" alt="" class="small-image">
+      </div>
+    </ion-card-content>
+  </ion-card>
+
+  <div *ngIf="!user" class="no-user">
+    <h1>No se encontró información del usuario.</h1>
+  </div>
+
+  <div class="centered-button">
+    <ion-button expand="full" (click)="irALogin()" color="secondary">
+      Volver al Login
+    </ion-button>
+  </div>
+</ion-content>

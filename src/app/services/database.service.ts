@@ -40,7 +40,7 @@ export class DatabaseService {
 
   testUser3 = User.getNewUsuario(
     'cmujica', 
-    'cmujica@duocuc.cl', 
+    'cmujica@duocuc.cl',                                                                                                                                              
     '0987', 
     '¿Cuál es tu vehículo favorito?',
     'moto',

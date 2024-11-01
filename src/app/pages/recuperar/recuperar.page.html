@@ -1,0 +1,54 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="end">
+      <ion-button (click)="irALogin()">
+        <ion-icon name="arrow-back"></ion-icon> <!-- Icono opcional -->
+      </ion-button>
+    </ion-buttons>
+    <ion-title>Recuperar Contraseña</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content class="ion-padding">
+  <ion-toast
+    [isOpen]="showToast"
+    [message]="toastMessage"
+    duration="2000"
+    (didDismiss)="showToast = false">
+  </ion-toast>
+
+  <ion-card *ngIf="showEmailInput"> <!-- Se muestra solo si showEmailInput es true -->
+    <ion-card-header>
+      <ion-card-title>Recuperar Contraseña</ion-card-title>
+      <ion-card-subtitle>Paso 1: Ingresa tu correo</ion-card-subtitle>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-item>
+        <ion-input type="email" [(ngModel)]="email" placeholder="Ingrese su correo" required></ion-input>
+      </ion-item>
+      <ion-button expand="full" (click)="verificarCorreo()">Verificar Correo</ion-button>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card *ngIf="showSecretQuestion"> <!-- Se muestra solo si showSecretQuestion es true -->
+    <ion-card-header>
+      <ion-card-title>Paso 2: Responde la pregunta secreta</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <p>{{ secretQuestion }}</p> <!-- Mostrar la pregunta secreta dinámica -->
+      <ion-item>
+        <ion-input type="text" [(ngModel)]="answer" placeholder="Respuesta" required></ion-input>
+      </ion-item>
+      <ion-button expand="full" (click)="verificarRespuesta()">Verificar Respuesta</ion-button>
+    </ion-card-content>
+  </ion-card>
+</ion-content>
+
+<ion-content class="ion-padding">
+  <div class="centered-button" >
+    <ion-button expand="full" (click)="irALogin()" color="secondary">
+      Volver al Login
+    </ion-button>
+  </div>
+</ion-content>

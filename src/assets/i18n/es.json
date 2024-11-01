@@ -1,5 +1,5 @@
 {
-    "AppName": "Angry-Dinosaurs",
+    "AppName": "Sistema de Asistencias",
     "AuthorText": "Desarrollado por:",
     "Author": "Cristián Gómez Vega",
     "Language": "Idioma",
@@ -15,7 +15,7 @@
     "Login.Label.Password": "Contraseña",
     "Login.Placeholder.Password": "Ingresa aquí tu contraseña",
     "Login.Button.Login": "Ingresar",
-    "Login.Button.Signin": "Registrarse",
+    "Login.Button.rute": "ruta",
     "Login.Button.ForgotPassword": "Olvidé mi contraseña",
     "Login.Button.DarkMode": "Oscuro",
 

@@ -70,7 +70,10 @@ export class LoginPage implements ViewWillEnter {
   }
 
   passwordRecovery() {
-    
+    this.router.navigate(['/recuperar'])
   }
 
+  goRute(){
+    this.router.navigate(['/map'])
+  }
 }

@@ -1,0 +1,43 @@
+.user-card {
+  margin: 20px;
+  border-radius: 10px; // Bordes redondeados
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); // Sombra suave
+  background-color: #f9f9f9; // Color de fondo más claro
+  text-align: center; // Centrar texto dentro de la card
+}
+
+.password-text {
+  font-size: 1.2rem; // Tamaño de fuente
+  font-weight: bold; // Negrita
+  margin-bottom: 10px; // Espaciado inferior
+}
+
+.password {
+  font-size: 1.5rem; // Tamaño de fuente mayor
+  color: #007aff; // Color azul para resaltar la contraseña
+  background-color: #e0f7fa; // Fondo azul claro
+  padding: 10px; // Espaciado interior
+  border-radius: 5px; // Bordes redondeados
+  display: inline-block; // Asegura que el fondo se ajuste al texto
+}
+
+.no-user {
+  text-align: center; // Centrar texto
+  margin-top: 50px; // Espaciado superior
+  font-size: 1.2rem; // Tamaño de fuente
+  color: #ff3b30; // Color rojo para mensaje de error
+}
+
+centered-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%; /* Ocupa el 100% de la altura del ion-content */
+}
+
+img {
+  width: 80%; /* Ajusta el porcentaje según el tamaño que desees */
+  height: auto; /* Mantiene la relación de aspecto de la imagen */
+  display: block; /* Para asegurarte de que el margen se aplique correctamente */
+  margin: 0 auto; /* Centra la imagen horizontalmente */
+}
