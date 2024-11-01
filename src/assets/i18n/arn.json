@@ -21,10 +21,11 @@
 
     "WelcomePage.Title.Wellcome": "¡Tüfachi mülenmi Angry-Dinosaurs!",
 
-    "HomePage.Button.Wellcome": "Wüña",
-    "HomePage.Button.Scan": "Wütran",
-    "HomePage.Button.Dinosaur": "Tüfachi Chod",
-    "HomePage.Button.Forum": "Trapu",
+    "HomePage.Button.CodigoQr": "Codigo QR",
+    "HomePage.Button.Scan": "Escanear",
+    "HomePage.Button.MyClass": "Mi clase",
+    "HomePage.Button.Forum": "Foro",
+    "HomePage.Button.Datos": "Datos",
 
     "ThemePage.Label.ColorTheme": "Dugün de kolor:",
     "ThemePage.Color.Light": "Külfün",

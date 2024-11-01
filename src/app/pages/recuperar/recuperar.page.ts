@@ -48,6 +48,10 @@ export class RecuperarPage implements OnInit {
     this.resetForm();
    }
 
+   ionViewWillEnter() {
+    this.resetForm();
+  }
+
   private resetForm() {
     this.email = '';
     this.user = undefined;

@@ -21,10 +21,11 @@
 
     "WelcomePage.Title.Wellcome": "¡Bienvenido a Angry-Dinosaurs!",
 
-    "HomePage.Button.Wellcome": "Inicio",
+    "HomePage.Button.CodigoQr": "Codigo QR",
     "HomePage.Button.Scan": "Escanear",
-    "HomePage.Button.Dinosaur": "Dinosaurio",
+    "HomePage.Button.MyClass": "Mi clase",
     "HomePage.Button.Forum": "Foro",
+    "HomePage.Button.Datos": "Datos",
 
     "ThemePage.Label.ColorTheme": "Tema de color:",
     "ThemePage.Color.Light": "Claro",
