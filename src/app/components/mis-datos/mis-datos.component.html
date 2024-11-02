@@ -1,3 +1,66 @@
-<p>
-  mis-datos works!
-</p>
+<ion-content class="content-background">
+  <form [formGroup]="userForm" (ngSubmit)="onSave()" class="form-container">
+    <ion-item class="form-item">
+      <ion-label position="stacked" class="label">Usuario</ion-label>
+      <ion-input formControlName="userName" class="input"></ion-input> <!-- Se eliminó readonly -->
+    </ion-item>
+
+    <ion-item class="form-item">
+      <ion-label position="stacked" class="label">Correo Electrónico</ion-label>
+      <ion-input formControlName="email" type="email" class="input"></ion-input>
+    </ion-item>
+
+    <ion-item class="form-item">
+      <ion-label position="stacked" class="label">Contraseña</ion-label>
+      <ion-input formControlName="password" type="password" class="input"></ion-input>
+    </ion-item>
+
+    <ion-item class="form-item">
+      <ion-label position="stacked" class="label">Pregunta Secreta</ion-label>
+      <ion-input formControlName="secretQuestion" class="input"></ion-input>
+    </ion-item>
+
+    <ion-item class="form-item">
+      <ion-label position="stacked" class="label">Respuesta Secreta</ion-label>
+      <ion-input formControlName="secretAnswer" type="password" class="input"></ion-input>
+    </ion-item>
+
+    <ion-item class="form-item">
+      <ion-label position="stacked" class="label">Nombre</ion-label>
+      <ion-input formControlName="firstName" class="input"></ion-input>
+    </ion-item>
+
+    <ion-item class="form-item">
+      <ion-label position="stacked" class="label">Apellido</ion-label>
+      <ion-input formControlName="lastName" class="input"></ion-input>
+    </ion-item>
+
+    <ion-item class="form-item">
+      <ion-label position="stacked" class="label">Nivel Educacional</ion-label>
+      <ion-select formControlName="educationalLevel" class="select">
+        <ion-select-option *ngFor="let level of educationalLevels" [value]="level.id">
+          {{ level.name }}
+        </ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item class="form-item">
+      <ion-label position="stacked" class="label">Fecha de Nacimiento</ion-label>
+      <ion-datetime formControlName="dateOfBirth" class="input"></ion-datetime>
+    </ion-item>
+
+    <ion-item class="form-item">
+      <ion-label position="stacked" class="label">Dirección</ion-label>
+      <ion-input formControlName="address" class="input"></ion-input>
+    </ion-item>
+
+    <ion-item class="form-item">
+      <ion-label position="stacked" class="label">Imagen de Perfil</ion-label>
+      <ion-input formControlName="image" placeholder="URL o nombre del archivo" class="input"></ion-input>
+    </ion-item>
+
+    <ion-button expand="block" type="submit" [disabled]="!userForm.valid" class="submit-button">
+      Guardar Cambios
+    </ion-button>
+  </form>
+</ion-content>

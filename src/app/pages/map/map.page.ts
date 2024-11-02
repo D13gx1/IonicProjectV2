@@ -9,6 +9,7 @@ import { GeoService } from 'src/app/services/geo.service';
 import * as L from 'leaflet'; // Importamos Leaflet
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { ToastController } from '@ionic/angular';
 
 @Component({
   selector: 'app-map',
@@ -29,11 +30,15 @@ export class MapPage implements OnInit {
   map: L.Map | null = null;
   addressName: string = '';
   distance: string = '';
+  isLoading: boolean = false; // Para indicar si se está cargando algo
+  errorMessage: string = ''; // Para almacenar mensajes de error
+
 
   constructor(
     private geo: GeoService, 
     private http: HttpClient,
-    private router: Router
+    private router: Router,
+    private toastController: ToastController
   ) {}
 
   ngOnInit() {
@@ -41,26 +46,36 @@ export class MapPage implements OnInit {
     this.fixLeafletIconPath();
   }
 
-  async loadMap() {
-    await this.geo.getCurrentPosition().then((position: { lat: number, lng: number } | null) => {
-      if (position) {
-        // Configuramos el centro del mapa y el nivel de zoom
-        this.map = L.map('mapId').setView([position.lat, position.lng], 50);
-
-        // Cargamos el mapa de OpenStreetMap
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-          attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-        }).addTo(this.map);
-        
-        // Ir a mi ubicación
-        this.goToMyPosition();
-      } else {
-        console.log('Posición geográfica desconocida');
-      }
-    }).catch((error) => {
-      console.log('Error al obtener la posición geográfica', error);
+  async presentToast(message: string) {
+    const toast = await this.toastController.create({
+        message,
+        duration: 2000,
+        position: 'top'
     });
+    await toast.present();
+}
+
+async loadMap() {
+  this.isLoading = true; // Comenzamos la carga
+  try {
+    const position = await this.geo.getCurrentPosition();
+    if (position) {
+      this.map = L.map('mapId').setView([position.lat, position.lng], 50);
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+      }).addTo(this.map);
+      this.goToMyPosition();
+    } else {
+      this.errorMessage = 'Posición geográfica desconocida';
+    }
+  } catch (error) {
+    this.errorMessage = 'Error al obtener la posición geográfica';
+    console.log('Error al obtener la posición geográfica', error);
+  } finally {
+    this.isLoading = false; // Finalizamos la carga
   }
+}
+
 
   goToDUOC() {
     this.goToPosition(-33.44703, -70.65762, 50, 'Instituto DUOC Padre Alonso de Ovalle');
@@ -88,15 +103,16 @@ export class MapPage implements OnInit {
 
   async getMyAddress(lat: number, lng: number) {
     this.geo.getPlaceFromCoordinates(lat, lng).subscribe({
-      next: (value: any) => {
-        this.addressName = value.display_name;
-      },
-      error: (error: any) => {
-        console.log('Error al obtener la dirección', error);
-        this.addressName = '';
-      }
+        next: (value: any) => {
+            this.addressName = value.display_name;
+        },
+        error: (error: any) => {
+            console.log('Error al obtener la dirección', error);
+            this.addressName = '';
+            this.presentToast('Error al obtener la dirección.');
+        }
     });
-  }
+}
 
   showRouteToDuoc() {
     this.geo.getCurrentPosition().then((position: { lat: number, lng: number } | null) => {

@@ -1,12 +1,16 @@
 <app-header></app-header>
 
 <ion-content [fullscreen]="true">
-  <!-- El div con id "mapId" será donde se mostrará el mapa -->
+  <ion-loading [isOpen]="isLoading" message="Cargando..."></ion-loading>
+  
   <div id="mapId" style="height: 100%;"></div>
-
-  <!-- Muestra la dirección actual -->
+  
   <div *ngIf="addressName">
     <p>Dirección: {{ addressName }}</p>
+  </div>
+  
+  <div *ngIf="errorMessage" class="error-message">
+    {{ errorMessage }}
   </div>
 </ion-content>
 

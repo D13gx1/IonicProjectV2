@@ -13,6 +13,7 @@ import { Capacitor } from '@capacitor/core';
 import { ScannerService } from 'src/app/services/scanner.service';
 import { WelcomeComponent } from 'src/app/components/welcome/welcome.component';
 import { ForumComponent } from 'src/app/components/forum/forum.component';
+import { MisDatosComponent } from 'src/app/components/mis-datos/mis-datos.component'; // Importa tu componente
 
 @Component({
   selector: 'app-home',
@@ -20,16 +21,16 @@ import { ForumComponent } from 'src/app/components/forum/forum.component';
   styleUrls: ['home.page.scss'],
   standalone: true,
   imports: [
-      CommonModule, FormsModule, TranslateModule, IonContent
-    , HeaderComponent, FooterComponent
-    , WelcomeComponent, QrWebScannerComponent, DinosaurComponent
-    , ForumComponent
+      CommonModule, FormsModule, TranslateModule, IonContent,
+      HeaderComponent, FooterComponent,
+      WelcomeComponent, QrWebScannerComponent, DinosaurComponent,
+      ForumComponent, MisDatosComponent // Asegúrate de incluir aquí tu componente
   ]
 })
 export class HomePage {
   
   @ViewChild(FooterComponent) footer!: FooterComponent;
-  selectedComponent = 'welcome';
+  selectedComponent = 'codigo-qr';
 
   constructor(private auth: AuthService, private scanner: ScannerService) { }
 
@@ -69,8 +70,9 @@ export class HomePage {
   }
 
   footerClick(button: string) {
-    this.selectedComponent = button;
+    this.selectedComponent = button; // Esto debe actualizarse correctamente con el valor "mis-datos"
   }
+  
 
   changeComponent(name: string) {
     this.selectedComponent = name;
