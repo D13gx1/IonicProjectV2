@@ -37,7 +37,7 @@
 
     <ion-item class="form-item">
       <ion-label position="stacked" class="label">Nivel Educacional</ion-label>
-      <ion-select formControlName="educationalLevel" class="select">
+      <ion-select formControlName="educationalLevel" class="select" interface="popover">
         <ion-select-option *ngFor="let level of educationalLevels" [value]="level.id">
           {{ level.name }}
         </ion-select-option>

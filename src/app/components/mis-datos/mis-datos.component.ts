@@ -4,6 +4,7 @@ import { DatabaseService } from 'src/app/services/database.service';
 import { User } from 'src/app/model/user';
 import { EducationalLevel } from 'src/app/model/educational-level';
 import { IonContent, IonItem, IonLabel, IonDatetime,IonInput, IonButton, IonSelect, IonSelectOption } from "@ionic/angular/standalone";
+import { CommonModule } from '@angular/common'; // Añade esta importación
 
 @Component({
   selector: 'app-mis-datos',
@@ -11,28 +12,27 @@ import { IonContent, IonItem, IonLabel, IonDatetime,IonInput, IonButton, IonSele
   styleUrls: ['./mis-datos.component.scss'],
   standalone: true,
   imports: [
-    IonContent,          // Importa directivas comunes de Angular como *ngIf y *ngFor
-    IonItem,           // Importa IonicModule para usar componentes de Ionic
+    CommonModule,      // Añade CommonModule aquí
+    IonContent,
+    IonItem,
     IonLabel,
     IonDatetime,
     IonInput,
-    IonButton,    // Importa ReactiveFormsModule para el manejo de formularios reactivos
+    IonButton,
     IonSelect,
     IonSelectOption,
     ReactiveFormsModule
-      
   ]
 })
 export class MisDatosComponent implements OnInit {
   userForm: FormGroup;
   currentUser!: User;
-  educationalLevels: EducationalLevel[] = EducationalLevel.getLevels(); // Para listar los niveles educativos
+  educationalLevels: EducationalLevel[] = EducationalLevel.getLevels();
 
   constructor(
     private fb: FormBuilder, 
     private databaseService: DatabaseService
   ) {
-    // Inicializa el formulario con campos vacíos
     this.userForm = this.fb.group({
       userName: [''],
       email: [''],
@@ -49,13 +49,14 @@ export class MisDatosComponent implements OnInit {
   }
 
   async ngOnInit() {
-    // Carga los datos del usuario al iniciar el componente
     this.currentUser = await this.databaseService.readUser('atorres') ?? new User();
     this.loadUserData();
+    console.log('Niveles educativos:', this.educationalLevels); // Para debug
   }
 
   loadUserData() {
     this.userForm.patchValue(this.currentUser);
+    console.log('Datos cargados:', this.currentUser); // Para debug
   }
 
   async onSave() {
