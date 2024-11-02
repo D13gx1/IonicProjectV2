@@ -25,6 +25,7 @@ import { AuthService } from 'src/app/services/auth.service';
 })
 export class LoginPage implements ViewWillEnter {
 
+  
   /** 
    * CGV-INI-Traducciones
    * Para poder utilizar la traducción de textos, se debe:
@@ -41,6 +42,7 @@ export class LoginPage implements ViewWillEnter {
 
   correo: string;
   password: string;
+  showPassword: boolean = false; // Asegúrate de que esta línea esté presente
 
   constructor(
       private router: Router
@@ -85,5 +87,9 @@ export class LoginPage implements ViewWillEnter {
 
   goRute(){
     this.router.navigate(['/map'])
+  }
+
+  togglePasswordVisibility() {
+    this.showPassword = !this.showPassword;
   }
 }
