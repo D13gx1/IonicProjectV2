@@ -1,57 +1,79 @@
-.content-background {
-  background-color: #f5f7fa;
-  padding: 20px;
-  font-family: Arial, sans-serif;
+.title-container {
+  width: 100%;
+  overflow: hidden;
+  padding: 20px 0;
+  background: var(--ion-color-primary);
+  margin-bottom: 20px;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.animated-title {
+  color: white;
+  font-size: 24px;
+  font-weight: bold;
+  animation: slideTitle 10s linear infinite;
+  white-space: nowrap;
+  margin: 0;
+  padding: 0 20px;
+  text-align: center;
+}
+
+@keyframes slideTitle {
+  0% {
+    transform: translateX(-100%);
+  }
+  
+  50% {
+    transform: translateX(100%);
+  }
+  
+  50.1% {
+    transform: translateX(-100%);
+  }
+  
+  100% {
+    transform: translateX(-100%);
+  }
 }
 
 .form-container {
-  max-width: 500px;
-  margin: 0 auto;
-  padding: 20px;
-  background-color: #ffffff;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 16px;
 }
 
 .form-item {
   margin-bottom: 16px;
+  --background: transparent;
+  --border-color: var(--ion-color-medium);
+  border-radius: 8px;
+  
+  &:hover {
+    --background: rgba(var(--ion-color-primary-rgb), 0.1);
+  }
 }
 
 .label {
-  font-size: 16px;
-  color: #333;
-  margin-bottom: 4px;
+  color: var(--ion-color-primary);
+  font-weight: 500;
 }
 
-.input,
-.select {
-  --padding-start: 12px;
-  --padding-end: 12px;
-  background-color: #f0f4f8;
-  border: 1px solid #dcdfe6;
-  border-radius: 4px;
-}
-
-.input:focus,
-.select:focus {
-  border-color: #42a5f5;
-  box-shadow: 0 0 5px rgba(66, 165, 245, 0.4);
+.input, .select {
+  --padding-start: 8px;
+  --padding-end: 8px;
+  --padding-top: 8px;
+  --padding-bottom: 8px;
 }
 
 .submit-button {
-  width: 100%;
-  padding: 12px;
-  font-size: 16px;
-  color: #ffffff;
-  background-color: #42a5f5;
-  border-radius: 4px;
-  transition: background-color 0.3s ease;
+  margin-top: 24px;
+  --border-radius: 8px;
+  font-weight: bold;
+  height: 48px;
 }
 
-.submit-button:hover {
-  background-color: #1e88e5;
-}
-
-.submit-button:active {
-  background-color: #1565c0;
+ion-datetime {
+  background: var(--ion-color-light);
+  border-radius: 8px;
+  padding: 8px;
 }
