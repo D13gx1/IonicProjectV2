@@ -3,7 +3,6 @@
 </app-header>
 
 <ion-content [fullscreen]="true">
-
   <app-qrwebscanner 
     *ngIf="selectedComponent === 'qrwebscanner'" 
     (scanned)="webQrScanned($event)"
