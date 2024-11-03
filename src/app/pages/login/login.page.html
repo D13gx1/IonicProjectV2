@@ -3,73 +3,62 @@
     <div slot="start" class="ion-margin">
       <app-language #selectLanguage></app-language>
     </div>
-    <div class="show-in-landscape">
-      <h1 class="glow-text"> {{ 'AppName' | translate }} </h1>
-    </div>
     <div slot="end" class="ion-margin">
       <ion-button shape="round" size="small" (click)="navigateTheme()">
         Tema
         <ion-icon slot="start" name="color-wand-outline"></ion-icon>
       </ion-button>
     </div>
-   </ion-toolbar>
+  </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  
-  <h1 class="glow-text show-in-portrait margin-top-6"> {{ 'AppName' | translate }} </h1>
+<ion-content [fullscreen]="true" class="ion-padding">
 
+  <!-- Encabezado principal fuera del ion-card -->
+  <h1 class="glow-text text-center"> {{ 'AppName' | translate }} </h1>
+
+  <div class="img-duoc">
+    <img class="rounded-img" src="../../../assets/img/duoc pao.png" alt="">
+  </div>
+
+  <!-- ion-card para el formulario de ingreso -->
   <ion-card class="login-container transparent-input">
 
-    <ion-card-header class="show-in-portrait">
-      <ion-card-title color="light" class="glow-text">
-        <h4>
-          <b>
-            {{ 'Login.Title.Login' | translate }}
-          </b>
-        </h4>
-      </ion-card-title>
-    </ion-card-header>
-
     <ion-card-content class="transparent-input text-center">
-      
-      <ion-item class="margin-bottom-6 float-left-landscape">
-        <ion-input 
-          label="{{ 'Login.Label.Email' | translate }}" 
-          labelPlacement="floating"
-          [(ngModel)]="correo" 
+      <h4 class="glow-text">{{ 'Login.Title.Login' | translate }}</h4>
+
+      <ion-item class="margin-bottom-6">
+        <ion-input label="{{ 'Login.Label.Email' | translate }}" labelPlacement="floating" [(ngModel)]="correo"
           placeholder="{{ 'Login.Placeholder.Email' | translate }}">
         </ion-input>
       </ion-item>
 
-      <ion-item class="margin-bottom-6 float-right-landscape">
-        <ion-input 
-          label="{{ 'Login.Label.Password' | translate }}"
-          labelPlacement="floating"
-          [(ngModel)]="password" 
-          placeholder="{{ 'Login.Placeholder.Password' | translate }}"
-          type="password">
+      <ion-item class="margin-bottom-6">
+        <ion-input label="{{ 'Login.Label.Password' | translate }}" labelPlacement="floating" [(ngModel)]="password"
+          placeholder="{{ 'Login.Placeholder.Password' | translate }}" [type]="showPassword ? 'text' : 'password'">
         </ion-input>
+        <ion-icon slot="end" [name]="showPassword ? 'eye-off-outline' : 'eye-outline'"
+          (click)="togglePasswordVisibility()" class="password-icon custom-icon"> <!-- Agregando la clase 'custom-icon' -->
+        </ion-icon>
+
       </ion-item>
 
-      <div class="ion-text-center margin-top-6" style="clear: both;">
+      <div class="ion-text-center margin-top-6">
         <ion-button class="enter-button normal-text" shape="round" (click)="login()">
           {{ 'Login.Button.Login' | translate }}
         </ion-button>
       </div>
-
     </ion-card-content>
 
   </ion-card>
-
 </ion-content>
 
 <ion-footer>
-  <ion-button color="primary" shape="block" (click)="goRute()">
+  <ion-button color="primary" expand="block" (click)="goRute()">
     {{ 'Login.Button.rute' | translate }}
   </ion-button>
 
-  <ion-button color="secondary" shape="block" (click)="passwordRecovery()">
+  <ion-button color="secondary" expand="block" (click)="passwordRecovery()">
     {{ 'Login.Button.ForgotPassword' | translate }}
   </ion-button>
 </ion-footer>

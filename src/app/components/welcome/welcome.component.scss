@@ -12,3 +12,14 @@
 ion-button {
   margin-top: 20px; /* Espacio arriba del botón */
 }
+
+/* Estilos de hover para el botón */
+ion-button:hover {
+  background-color: #f0f0f0; /* Color de fondo al pasar el mouse */
+  color: #333; /* Color del texto al pasar el mouse */
+}
+
+/* Estilos de active para el botón */
+ion-button:active {
+  transform: scale(0.95); /* Efecto de pulsación al hacer clic */
+}

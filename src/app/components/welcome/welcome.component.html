@@ -1,7 +1,31 @@
-<div class="ion-text-center">
-  <h1>Bienvenido(a)</h1>
-  <h1>{{ user.firstName }} {{ user.lastName }}</h1>
-  <p class="attendance-message">Escanea el código QR para registrar tu asistencia a clases</p>
+<!-- src/app/tabs/mi-info/mi-info.page.html -->
+
+
+<ion-header>
+  <ion-toolbar>
+    <h3 class="moving-text">¡Bienvenido al Sistema de Asistencia!</h3>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-button *ngIf="!escaneando" (click)="comenzarEscaneoQR()" expand="full" shape="round">
+    <ion-icon slot="start" name="videocam-outline"></ion-icon>
+    Comenzar Escaneo de QR
+  </ion-button>
+
+  <ion-button *ngIf="escaneando" (click)="detenerEscaneoQR()" expand="full" shape="round">
+    <ion-icon slot="start" name="stopcircle-outline"></ion-icon>
+    Detener Escaneo de QR
+  </ion-button>
+
+  <ion-button (click)="limpiarDatos()" expand="full" shape="round">
+    <ion-icon slot="start" name="trash-outline"></ion-icon>
+    Limpiar Datos
+  </ion-button>
+
+  <video #video [hidden]="!escaneando" width="100%"></video>
+  <canvas #canvas [hidden]> </canvas>
+
   
-  <ion-button expand="default" color="danger" (click)="cerrarSesion()">Cerrar Sesión</ion-button>
-</div>
+</ion-content>
