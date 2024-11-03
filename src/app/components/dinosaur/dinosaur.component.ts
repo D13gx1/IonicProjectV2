@@ -38,12 +38,6 @@ export class DinosaurComponent implements OnDestroy {
   
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
-    // Limpiar datos al destruir el componente
-    this.authService.qrCodeData.next(null);
-  }
-
-  ionViewWillLeave() {
-    // Limpiar datos al salir de la vista
-    this.authService.qrCodeData.next(null);
+    // Ya no limpiamos los datos aquí
   }
 }
