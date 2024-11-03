@@ -44,20 +44,28 @@ export class ForumComponent implements OnInit, OnDestroy {
     addIcons({ pencilOutline, trashOutline, add });
   }
 
-  ngOnInit() {
-    // Suscribirse a los cambios en la lista de posts
-    this.postsSubscription = this.api.postList.subscribe(posts => {
-      console.log('Posts actualizados:', posts);
-      this.posts = posts;
-    });
+  async ngOnInit() {
+    try {
+      // Primero cargar los posts existentes
+      await this.loadPosts();
 
-    // Suscribirse a los cambios del usuario
-    this.userSubscription = this.auth.authUser.subscribe(user => {
-      this.user = user || new User();
-    });
+      // Luego suscribirse a los cambios
+      this.postsSubscription = this.api.postList.subscribe(posts => {
+        console.log('Posts actualizados:', posts);
+        this.posts = posts.sort((a, b) => {
+          const idA = parseInt(a.id);
+          const idB = parseInt(b.id);
+          return idA - idB;
+        });
+      });
 
-    // Cargar posts iniciales
-    this.loadPosts();
+      this.userSubscription = this.auth.authUser.subscribe(user => {
+        this.user = user || new User();
+      });
+    } catch (error) {
+      console.error('Error cargando posts:', error);
+      showAlertError('Error al cargar las publicaciones', error);
+    }
   }
 
   ngOnDestroy() {
@@ -67,8 +75,10 @@ export class ForumComponent implements OnInit, OnDestroy {
 
   async loadPosts() {
     try {
-      await this.api.fetchPosts();
+      const posts = await this.api.fetchPosts();
+      console.log('Posts cargados:', posts);
     } catch (error) {
+      console.error('Error en loadPosts:', error);
       showAlertError('Error al cargar las publicaciones', error);
     }
   }

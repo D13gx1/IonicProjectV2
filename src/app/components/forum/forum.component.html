@@ -34,9 +34,9 @@
   </ion-card>
 
   <ion-list>
-    <ion-card *ngFor="let post of posts; trackBy: getPostId">
+    <ion-card *ngFor="let post of posts; let i = index">
       <ion-card-header>
-        <h6>(Publicación #{{ post.id }}) {{ post.author }}</h6>
+        <h6>(Publicación #{{ i + 1 }}) {{ post.author }}</h6>
         <h4>{{ post.title }}</h4>
       </ion-card-header>
   
@@ -44,17 +44,16 @@
         <p>{{ post.body }}</p>
       </ion-card-content>
   
-      <!-- Contenedor para alinear los botones horizontalmente a la derecha -->
-      <div style="display: flex; justify-content: flex-end; gap: 10px; margin-right: 16px;">
-        <ion-fab-button size="small" color="primary" (click)="editPost(post)">
+      <div style="display: flex; justify-content: flex-end; gap: 10px; margin: 0 16px 16px;">
+        <ion-fab-button size="small" color="primary" (click)="editPost(post)"
+          [disabled]="!post?.id">
           <ion-icon name="pencil-outline"></ion-icon>
         </ion-fab-button>
-        <ion-fab-button size="small" color="danger" (click)="deletePost(post)">
+        <ion-fab-button size="small" color="danger" (click)="deletePost(post)"
+          [disabled]="!post?.id">
           <ion-icon name="trash-outline"></ion-icon>
         </ion-fab-button>
       </div>
     </ion-card>
   </ion-list>
-  
-
 </ion-content>
