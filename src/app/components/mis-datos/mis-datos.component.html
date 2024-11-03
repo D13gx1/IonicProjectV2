@@ -49,9 +49,16 @@
       </ion-select>
     </ion-item>
  
+    <!-- Aquí está el cambio: de ion-datetime a ion-input -->
     <ion-item class="form-item">
-      <ion-label position="stacked" class="label">Fecha de Nacimiento</ion-label>
-      <ion-datetime formControlName="dateOfBirth" class="input"></ion-datetime>
+      <ion-label position="stacked" class="label">Fecha de Nacimiento (dd/mm/yyyy)</ion-label>
+      <ion-input 
+        formControlName="dateOfBirth" 
+        placeholder="dd/mm/yyyy"
+        maxlength="10"
+        (ionInput)="onDateInput($event)"
+        class="input">
+      </ion-input>
     </ion-item>
  
     <ion-item class="form-item">
@@ -65,7 +72,7 @@
     </ion-item>
  
     <ion-button expand="block" type="submit" [disabled]="!userForm.valid" class="submit-button" color="warning">
-  Guardar Cambios
-</ion-button>
+      Guardar Cambios
+    </ion-button>
   </form>
- </ion-content>
+</ion-content>
