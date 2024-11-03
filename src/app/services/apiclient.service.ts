@@ -22,15 +22,13 @@ export class APIClientService {
   constructor(
     private http: HttpClient,
     private authService: AuthService
-  ) { }
-
-  private async refreshPostList(): Promise<void> {
-    try {
-      const posts = await this.fetchPosts();
-      this.postList.next(posts);
-    } catch (error) {
-      showAlertError('Error al refrescar la lista de posts', error);
-    }
+  ) {
+    // Intentar cargar posts al iniciar el servicio
+    this.fetchPosts().then(() => {
+      console.log('Posts iniciales cargados');
+    }).catch(error => {
+      console.error('Error cargando posts iniciales:', error);
+    });
   }
 
   async fetchPosts(): Promise<Post[]> {
@@ -40,22 +38,22 @@ export class APIClientService {
         this.http.get<any[]>(this.apiUrl + '/posts').pipe(
           retry(3),
           catchError(error => {
-            if (error.status === 0) {
-              showToast('Error de conexión: Verifica que el servidor JSON esté corriendo en puerto 3005');
-            }
+            console.error('Error fetching posts:', error);
             throw error;
           })
         )
       );
 
-      return response.map(item => Post.getNewPost(
-        item.id.toString(),
+      const posts = response.map(item => Post.getNewPost(
+        item.id,
         item.title,
         item.body,
-        item.author || `Usuario ${item.userId}`,
-        new Date().toISOString(),
-        ''
+        item.author,
+        item.date || new Date().toISOString()
       ));
+
+      this.postList.next(posts);
+      return posts;
     } catch (error) {
       console.error('Error en fetchPosts:', error);
       return [];
@@ -70,12 +68,18 @@ export class APIClientService {
         return null;
       }
 
+      // Obtener el siguiente ID
+      const posts = await this.fetchPosts();
+      const nextId = posts.length > 0 
+        ? (Math.max(...posts.map(p => parseInt(p.id))) + 1).toString()
+        : '1';
+
       const postToCreate = {
+        id: nextId,
         title: post.title,
         body: post.body,
         author: `${user.firstName} ${user.lastName}`,
-        date: new Date().toISOString(),
-        userId: 1 // Valor por defecto
+        date: new Date().toISOString()
       };
 
       const response = await lastValueFrom(
@@ -83,15 +87,16 @@ export class APIClientService {
           .pipe(retry(3))
       );
       
-      await this.refreshPostList();
-      return Post.getNewPost(
-        response.id.toString(),
+      const newPost = Post.getNewPost(
+        response.id,
         response.title,
         response.body,
         response.author,
-        response.date,
-        ''
+        response.date
       );
+
+      await this.fetchPosts();
+      return newPost;
     } catch (error) {
       showAlertError('Error al crear post', error);
       return null;
@@ -101,26 +106,20 @@ export class APIClientService {
   async updatePost(post: Post): Promise<Post | null> {
     try {
       const response = await lastValueFrom(
-        this.http.put<any>(`${this.apiUrl}/posts/${post.id}`, {
-          id: post.id,
-          title: post.title,
-          body: post.body,
-          author: post.author,
-          date: post.date,
-          userId: 1 // Valor por defecto
-        }, this.httpOptions)
+        this.http.put<any>(`${this.apiUrl}/posts/${post.id}`, post, this.httpOptions)
           .pipe(retry(3))
       );
       
-      await this.refreshPostList();
-      return Post.getNewPost(
-        response.id.toString(),
+      const updatedPost = Post.getNewPost(
+        response.id,
         response.title,
         response.body,
         response.author,
-        response.date,
-        ''
+        response.date
       );
+
+      await this.fetchPosts();
+      return updatedPost;
     } catch (error) {
       showAlertError('Error al actualizar post', error);
       return null;
@@ -135,16 +134,7 @@ export class APIClientService {
       }
 
       console.log('Intentando eliminar post con ID:', id);
-
-      // Verificar si el post existe
-      const posts = await this.fetchPosts();
-      const postExists = posts.some(post => post.id === id);
       
-      if (!postExists) {
-        showToast('La publicación no existe o ya fue eliminada');
-        return false;
-      }
-
       await lastValueFrom(
         this.http.delete(`${this.apiUrl}/posts/${id}`, this.httpOptions)
           .pipe(
@@ -152,19 +142,16 @@ export class APIClientService {
             catchError(error => {
               if (error.status === 404) {
                 showToast('La publicación no existe o ya fue eliminada');
-              } else {
-                showAlertError('Error al eliminar la publicación', error);
               }
               throw error;
             })
           )
       );
       
-      await this.refreshPostList();
-      showToast('Publicación eliminada correctamente');
+      await this.fetchPosts();
       return true;
     } catch (error) {
-      console.error('Error al eliminar post:', error);
+      showAlertError('Error al eliminar post', error);
       return false;
     }
   }
