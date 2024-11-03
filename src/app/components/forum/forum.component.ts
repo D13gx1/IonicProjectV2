@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { APIClientService } from 'src/app/services/apiclient.service';
 import { AuthService } from 'src/app/services/auth.service';
-import { IonFabButton, IonFab, IonList, IonCardContent, IonHeader
+import { AlertController, IonFabButton, IonFab, IonList, IonCardContent, IonHeader
   , IonToolbar, IonTitle, IonCard, IonCardHeader, IonCardTitle
   , IonCardSubtitle, IonItem, IonLabel, IonInput, IonTextarea
   , IonGrid, IonRow, IonCol, IonButton, IonIcon, IonContent
@@ -10,7 +10,7 @@ import { pencilOutline, trashOutline, add } from 'ionicons/icons';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Post } from 'src/app/model/post';
-import { showToast } from 'src/app/tools/message-functions';
+import { showToast, showAlertError } from 'src/app/tools/message-functions';
 import { addIcons } from 'ionicons';
 import { Subscription } from 'rxjs';
 import { User } from 'src/app/model/user';
@@ -28,31 +28,49 @@ import { User } from 'src/app/model/user';
     , CommonModule, FormsModule]
 })
 export class ForumComponent implements OnInit, OnDestroy {
-
   post: Post = new Post();
   posts: Post[] = [];
-  selectedPostText = '';
+  selectedPostText = 'Nueva publicación';
   intervalId: any = null;
   user = new User();
   private postsSubscription!: Subscription;
   private userSubscription!: Subscription;
 
-  constructor(private api: APIClientService, private auth: AuthService) {
+  constructor(
+    private api: APIClientService, 
+    private auth: AuthService,
+    private alertController: AlertController
+  ) {
     addIcons({ pencilOutline, trashOutline, add });
   }
 
   ngOnInit() {
-    this.postsSubscription = this.api.postList.subscribe((posts) => {
+    // Suscribirse a los cambios en la lista de posts
+    this.postsSubscription = this.api.postList.subscribe(posts => {
+      console.log('Posts actualizados:', posts);
       this.posts = posts;
     });
-    this.userSubscription = this.auth.authUser.subscribe((user) => {
-      this.user = user? user : new User();
+
+    // Suscribirse a los cambios del usuario
+    this.userSubscription = this.auth.authUser.subscribe(user => {
+      this.user = user || new User();
     });
-    this.api.refreshPostList(); // Actualiza lista de posts al iniciar
+
+    // Cargar posts iniciales
+    this.loadPosts();
   }
 
   ngOnDestroy() {
     if (this.postsSubscription) this.postsSubscription.unsubscribe();
+    if (this.userSubscription) this.userSubscription.unsubscribe();
+  }
+
+  async loadPosts() {
+    try {
+      await this.api.fetchPosts();
+    } catch (error) {
+      showAlertError('Error al cargar las publicaciones', error);
+    }
   }
 
   cleanPost() {
@@ -60,56 +78,103 @@ export class ForumComponent implements OnInit, OnDestroy {
     this.selectedPostText = 'Nueva publicación';
   }
 
-  savePost() {
-    if (!this.post.title.trim()) {
-      showToast('Por favor, completa el título.');
-      return;
-    }
-    if (!this.post.body.trim()) {
-      showToast('Por favor, completa el cuerpo.');
-      return;
-    }
+  async savePost() {
+    try {
+      if (!this.post.title.trim()) {
+        showToast('Por favor, completa el título.');
+        return;
+      }
+      if (!this.post.body.trim()) {
+        showToast('Por favor, completa el cuerpo.');
+        return;
+      }
 
-    if (this.post.id) {
-      this.updatePost();
-    } else {
-      this.createPost();
+      if (this.post.id) {
+        await this.updatePost();
+      } else {
+        await this.createPost();
+      }
+    } catch (error) {
+      showAlertError('Error al guardar la publicación', error);
     }
   }
 
   private async createPost() {
-    this.post.author = this.user.firstName + ' ' + this.user.lastName;
-    const createdPost = await this.api.createPost(this.post);
-    if (createdPost) {
-      showToast(`Publicación creada correctamente: ${createdPost.title}`);
-      this.cleanPost();
+    try {
+      this.post.author = `${this.user.firstName} ${this.user.lastName}`;
+      const createdPost = await this.api.createPost(this.post);
+      if (createdPost) {
+        showToast(`Publicación creada correctamente: ${createdPost.title}`);
+        this.cleanPost();
+        await this.loadPosts();
+      }
+    } catch (error) {
+      showAlertError('Error al crear la publicación', error);
     }
   }
 
   private async updatePost() {
-    this.post.author = this.user.firstName + ' ' + this.user.lastName;
-    const updatedPost = await this.api.updatePost(this.post);
-    if (updatedPost) {
-      showToast(`Publicación actualizada correctamente: ${updatedPost.title}`);
-      this.cleanPost();
+    try {
+      this.post.author = `${this.user.firstName} ${this.user.lastName}`;
+      const updatedPost = await this.api.updatePost(this.post);
+      if (updatedPost) {
+        showToast(`Publicación actualizada correctamente: ${updatedPost.title}`);
+        this.cleanPost();
+        await this.loadPosts();
+      }
+    } catch (error) {
+      showAlertError('Error al actualizar la publicación', error);
     }
   }
 
   editPost(post: Post) {
-    this.post = { ...post }; // Crea una copia para editar sin afectar la lista
+    this.post = { ...post };
     this.selectedPostText = `Editando publicación #${post.id}`;
-    document.getElementById('topOfPage')!.scrollIntoView({ behavior: 'smooth' });
+    document.getElementById('topOfPage')?.scrollIntoView({ behavior: 'smooth' });
   }
 
   async deletePost(post: Post) {
-    const success = await this.api.deletePost(post.id);
-    if (success) {
-      showToast(`Publicación eliminada correctamente: ${post.id}`);
-      this.cleanPost();
+    try {
+      if (!post?.id) {
+        showToast('No se puede identificar la publicación a eliminar');
+        return;
+      }
+
+      console.log('Intentando eliminar post:', post);
+
+      const alert = await this.alertController.create({
+        header: 'Confirmar eliminación',
+        message: '¿Estás seguro de que deseas eliminar esta publicación?',
+        buttons: [
+          {
+            text: 'Cancelar',
+            role: 'cancel'
+          },
+          {
+            text: 'Eliminar',
+            role: 'destructive',
+            handler: async () => {
+              try {
+                const success = await this.api.deletePost(post.id);
+                if (success) {
+                  showToast('Publicación eliminada correctamente');
+                  await this.loadPosts();
+                }
+              } catch (error) {
+                showAlertError('Error al eliminar la publicación', error);
+              }
+            }
+          }
+        ]
+      });
+
+      await alert.present();
+    } catch (error) {
+      showAlertError('Error al procesar la eliminación', error);
     }
   }
 
-  getPostId(index: number, post: Post) {
+  getPostId(index: number, post: Post): string {
     return post.id;
   }
 }

@@ -1,122 +1,171 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { BehaviorSubject, lastValueFrom } from 'rxjs';
-import { retry } from 'rxjs/operators';
+import { retry, catchError } from 'rxjs/operators';
 import { Post } from '../model/post';
-import { showAlertError } from '../tools/message-functions';
+import { showAlertError, showToast } from '../tools/message-functions';
 import { AuthService } from './auth.service';
-import { User } from '../model/user';
 
 @Injectable({
   providedIn: 'root'
 })
 export class APIClientService {
-
   httpOptions = {
     headers: new HttpHeaders({
-      'content-type': 'application/json',
-      'access-control-allow-origin': '*'
+      'Content-Type': 'application/json'
     })
   };
 
-  apiUrl = 'http://localhost:3000';
-  //apiUrl = 'http://192.168.100.227:3000';
+  apiUrl = 'http://localhost:3005';
   postList: BehaviorSubject<Post[]> = new BehaviorSubject<Post[]>([]);
 
-  constructor(private http: HttpClient) { }
+  constructor(
+    private http: HttpClient,
+    private authService: AuthService
+  ) { }
 
-  // Crear una publicación y actualizar postList; devuelve el registro recién creado
-  async createPost(post: Post): Promise<Post | null> {
-    try {
-      const postWithoutId = {
-        "title": post.title,
-        "body": post.body,
-        "author": post.author,
-        "date": post.date,
-        "authorImage": post.authorImage
-      };
-
-      const createdPost = await lastValueFrom(
-        this.http.post<Post>(this.apiUrl + '/posts', 
-          postWithoutId, this.httpOptions).pipe(retry(3))
-      );
-      await this.refreshPostList();
-      return createdPost;
-    } catch (error) {
-      showAlertError('APIClientService.createPost', error);
-      return null;
-    }
-  }
-
-  // Actualizar una publicación; devuelve la publicación actualizada
-  async updatePost(post: Post): Promise<Post | null> {
-    try {
-      const updatedPost = await lastValueFrom(
-        this.http.put<Post>(this.apiUrl + '/posts/' + post.id, 
-          post, this.httpOptions).pipe(retry(3))
-      );
-      await this.refreshPostList();
-      return updatedPost;
-    } catch (error) {
-      showAlertError('APIClientService.updatePost', error);
-      return null;
-    }
-  }
-
-  // Eliminar una publicación; devuelve true si se eliminó exitosamente
-  async deletePost(id: number): Promise<boolean> {
-    try {
-      await lastValueFrom(
-        this.http.delete(this.apiUrl + '/posts/' + id, this.httpOptions).pipe(retry(3))
-      );
-      await this.refreshPostList();
-      return true;
-    } catch (error) {
-      showAlertError('APIClientService.deletePost', error);
-      return false;
-    }
-  }
-
-  // Refrescar el listado de publicaciones y notificar a los suscriptores
-  async refreshPostList(): Promise<void> {
+  private async refreshPostList(): Promise<void> {
     try {
       const posts = await this.fetchPosts();
-      console.log(posts);
       this.postList.next(posts);
     } catch (error) {
-      showAlertError('APIClientService.refreshPostList', error);
+      showAlertError('Error al refrescar la lista de posts', error);
     }
   }
 
-  // Obtener todas las publicaciones desde la API
   async fetchPosts(): Promise<Post[]> {
     try {
-      const posts = await lastValueFrom(
-        this.http.get<Post[]>(this.apiUrl + '/posts').pipe(retry(3)));
-      return posts.reverse();
+      console.log('Obteniendo posts desde:', this.apiUrl + '/posts');
+      const response = await lastValueFrom(
+        this.http.get<any[]>(this.apiUrl + '/posts').pipe(
+          retry(3),
+          catchError(error => {
+            if (error.status === 0) {
+              showToast('Error de conexión: Verifica que el servidor JSON esté corriendo en puerto 3005');
+            }
+            throw error;
+          })
+        )
+      );
+
+      return response.map(item => Post.getNewPost(
+        item.id.toString(),
+        item.title,
+        item.body,
+        item.author || `Usuario ${item.userId}`,
+        new Date().toISOString(),
+        ''
+      ));
     } catch (error) {
-      this.handleHttpError('APIClientService.fetchPosts', error);
+      console.error('Error en fetchPosts:', error);
       return [];
     }
   }
 
-  // Manejo de errores HTTP con detección de códigos de estado
-  private handleHttpError(methodName: string, error: any): void {
-    if (error instanceof HttpErrorResponse) {
-      const statusCode = error.status;
-      if (statusCode === 400) {
-        showAlertError(`${methodName} - Solicitud incorrecta (400)`, error.message);
-      } else if (statusCode === 401) {
-        showAlertError(`${methodName} - No autorizado (401)`, error.message);
-      } else if (statusCode === 404) {
-        showAlertError(`${methodName} - No encontrado (404)`, error.message, true);
-      } else if (statusCode === 500) {
-        showAlertError(`${methodName} - Error interno del servidor (500)`, error.message);
-      } else {
-        showAlertError(`${methodName} - Error inesperado (${statusCode})`, error.message);
+  async createPost(post: Post): Promise<Post | null> {
+    try {
+      const user = await this.authService.readAuthUser();
+      if (!user) {
+        showToast('Debe iniciar sesión para crear publicaciones');
+        return null;
       }
-    } else {
-      showAlertError(`${methodName} - Error desconocido`, error);
+
+      const postToCreate = {
+        title: post.title,
+        body: post.body,
+        author: `${user.firstName} ${user.lastName}`,
+        date: new Date().toISOString(),
+        userId: 1 // Valor por defecto
+      };
+
+      const response = await lastValueFrom(
+        this.http.post<any>(this.apiUrl + '/posts', postToCreate, this.httpOptions)
+          .pipe(retry(3))
+      );
+      
+      await this.refreshPostList();
+      return Post.getNewPost(
+        response.id.toString(),
+        response.title,
+        response.body,
+        response.author,
+        response.date,
+        ''
+      );
+    } catch (error) {
+      showAlertError('Error al crear post', error);
+      return null;
+    }
+  }
+
+  async updatePost(post: Post): Promise<Post | null> {
+    try {
+      const response = await lastValueFrom(
+        this.http.put<any>(`${this.apiUrl}/posts/${post.id}`, {
+          id: post.id,
+          title: post.title,
+          body: post.body,
+          author: post.author,
+          date: post.date,
+          userId: 1 // Valor por defecto
+        }, this.httpOptions)
+          .pipe(retry(3))
+      );
+      
+      await this.refreshPostList();
+      return Post.getNewPost(
+        response.id.toString(),
+        response.title,
+        response.body,
+        response.author,
+        response.date,
+        ''
+      );
+    } catch (error) {
+      showAlertError('Error al actualizar post', error);
+      return null;
+    }
+  }
+
+  async deletePost(id: string): Promise<boolean> {
+    try {
+      if (!id) {
+        showToast('ID de publicación no válido');
+        return false;
+      }
+
+      console.log('Intentando eliminar post con ID:', id);
+
+      // Verificar si el post existe
+      const posts = await this.fetchPosts();
+      const postExists = posts.some(post => post.id === id);
+      
+      if (!postExists) {
+        showToast('La publicación no existe o ya fue eliminada');
+        return false;
+      }
+
+      await lastValueFrom(
+        this.http.delete(`${this.apiUrl}/posts/${id}`, this.httpOptions)
+          .pipe(
+            retry(1),
+            catchError(error => {
+              if (error.status === 404) {
+                showToast('La publicación no existe o ya fue eliminada');
+              } else {
+                showAlertError('Error al eliminar la publicación', error);
+              }
+              throw error;
+            })
+          )
+      );
+      
+      await this.refreshPostList();
+      showToast('Publicación eliminada correctamente');
+      return true;
+    } catch (error) {
+      console.error('Error al eliminar post:', error);
+      return false;
     }
   }
 }

@@ -1,23 +1,22 @@
 export class Post {
-  
-  id = 0;
-  title = '';
-  body = '';
-  author = '';
-  date = '';
-  authorImage ='';
+  id: string = '';
+  title: string = '';
+  body: string = '';
+  author: string = '';
+  date: string = '';
+  authorImage: string = '';
 
   constructor() { }
 
   public static getNewPost(
-    id: number,
-    title: string,
-    body: string,
-    author: string,
-    date: string,
-    authorImage: string
+    id: string = '',
+    title: string = '',
+    body: string = '',
+    author: string = '',
+    date: string = '',
+    authorImage: string = ''
   ) {
-    const post = new Post()
+    const post = new Post();
     post.id = id;
     post.title = title;
     post.body = body;
