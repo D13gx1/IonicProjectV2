@@ -1,3 +1,43 @@
+.title-container {
+  width: 100%;
+  overflow: hidden;
+  padding: 0px 0;
+  background: var(--ion-color-primary);
+  margin-bottom: 20px;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.animated-title {
+  color: white;
+  font-size: 24px;
+  font-weight: bold;
+  animation: slideTitle 10s linear infinite;
+  white-space: nowrap;
+  margin: 0;
+  padding: 0 20px;
+  text-align: center;
+}
+
+@keyframes slideTitle {
+  0% {
+    transform: translateX(-100%);
+  }
+  
+  50% {
+    transform: translateX(100%);
+  }
+  
+  50.1% {
+    transform: translateX(-100%);
+  }
+  
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
 .ion-text-center {
   margin: 20px; /* Espaciado alrededor del contenedor */
 }

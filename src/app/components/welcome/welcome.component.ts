@@ -4,7 +4,6 @@ import { User } from 'src/app/model/user';
 import { AuthService } from 'src/app/services/auth.service';
 import { IonButton, IonToolbar, IonHeader, IonCardContent, IonCardHeader, IonCardTitle, IonCard, IonIcon, IonContent, IonButtons, IonTitle } from "@ionic/angular/standalone";
 import { Router } from '@angular/router';
-
 import { AlertController, LoadingController } from '@ionic/angular';
 import jsQR from 'jsqr';
 

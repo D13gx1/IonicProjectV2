@@ -30,7 +30,7 @@ import { MisDatosComponent } from 'src/app/components/mis-datos/mis-datos.compon
 export class HomePage {
   
   @ViewChild(FooterComponent) footer!: FooterComponent;
-  selectedComponent = 'codigo-qr';
+  selectedComponent = 'welcome';
 
   constructor(private auth: AuthService, private scanner: ScannerService) { }
 
