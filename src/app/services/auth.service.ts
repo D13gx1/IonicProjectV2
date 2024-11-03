@@ -88,13 +88,14 @@ export class AuthService {
           await this.router.navigate(['/home']);
           return true;
         } else {
-          showToast('El correo o la password son incorrectos');
-          await this.router.navigate(['/login']);
-          return false;
+          // Mostrar mensaje de error sin redireccionar a home
+          showToast('El correo o la contraseña son incorrectos');
+          return false; // No redirigir
         }
       }
     } catch (error) {
       showAlertError('AuthService.login', error);
+      // Evitar redirección y mantener al usuario en la página de login en caso de error del sistema
       return false;
     }
   }
