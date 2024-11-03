@@ -29,12 +29,14 @@ export class AuthService {
 
   async isAuthenticated(): Promise<boolean> {
     try {
-      return Boolean(await this.readAuthUser());
+      const user = await this.readAuthUser();
+      return user !== null;  // Verifica que el usuario no sea null
     } catch (error) {
       showAlertError('AuthService.isAuthenticated', error);
-      return false;
+      return false; // En caso de error, se considera no autenticado
     }
   }
+  
 
   async readAuthUser(): Promise<User | null> {
     try {

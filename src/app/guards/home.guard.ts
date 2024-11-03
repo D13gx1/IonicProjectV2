@@ -7,10 +7,11 @@ export const homeGuard: CanActivateFn = async (route, state) => {
   const authService = inject(AuthService);
   const router = inject(Router);
 
-  if (await authService.isAuthenticated()) {
-    return true;
+  const isAuthenticated = await authService.isAuthenticated();
+  if (isAuthenticated) {
+    return true; // Permite el acceso al home
   } else {
-    router.navigate(['/login']);
-    return false;    
+    router.navigate(['/login']); // Redirige a login
+    return false; // Deniega el acceso
   }
-}
+};
