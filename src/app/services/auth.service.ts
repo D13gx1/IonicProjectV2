@@ -30,13 +30,12 @@ export class AuthService {
   async isAuthenticated(): Promise<boolean> {
     try {
       const user = await this.readAuthUser();
-      return user !== null;  // Verifica que el usuario no sea null
+      return user !== null;
     } catch (error) {
       showAlertError('AuthService.isAuthenticated', error);
-      return false; // En caso de error, se considera no autenticado
+      return false;
     }
   }
-  
 
   async readAuthUser(): Promise<User | null> {
     try {
@@ -90,14 +89,12 @@ export class AuthService {
           await this.router.navigate(['/home']);
           return true;
         } else {
-          // Mostrar mensaje de error sin redireccionar a home
           showToast('El correo o la contraseña son incorrectos');
-          return false; // No redirigir
+          return false;
         }
       }
     } catch (error) {
       showAlertError('AuthService.login', error);
-      // Evitar redirección y mantener al usuario en la página de login en caso de error del sistema
       return false;
     }
   }
@@ -109,6 +106,9 @@ export class AuthService {
       if (user) {
         showToast(`¡Hasta pronto ${user.firstName} ${user.lastName}!`);
         await this.deleteAuthUser();
+        // Limpiar datos del QR al cerrar sesión
+        this.qrCodeData.next(null);
+        await this.storage.remove(this.storageQrCodeKey);
       }
 
       await this.router.navigate(['/login']);
@@ -118,37 +118,4 @@ export class AuthService {
       return false;
     }
   }
-
-  // async readQrFromStorage(): Promise<string | null> {
-  //   try {
-  //     const qrData = await this.storage.get(this.storageQrCodeKey) as string | null;
-  //     this.qrCodeData.next(qrData);
-  //     return qrData;
-  //   } catch (error) {
-  //     showAlertError('AuthService.readQrFromStorage', error);
-  //     return null;
-  //   }
-  // }
-
-  // async saveQrToStorage(qrData: string): Promise<string | null> {
-  //   try {
-  //     await this.storage.set(this.storageQrCodeKey, qrData);
-  //     this.qrCodeData.next(qrData);
-  //     return qrData;
-  //   } catch (error) {
-  //     showAlertError('AuthService.saveQrToStorage', error);
-  //     return null;
-  //   }
-  // }
-
-  // async deleteQrFromStorage(): Promise<boolean> {
-  //   try {
-  //     await this.storage.remove(this.storageQrCodeKey);
-  //     this.qrCodeData.next(null);
-  //     return true;
-  //   } catch (error) {
-  //     showAlertError('AuthService.deleteQrFromStorage', error);
-  //     return false;
-  //   }
-  // }
 }
