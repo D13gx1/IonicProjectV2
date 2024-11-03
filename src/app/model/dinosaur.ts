@@ -4,63 +4,70 @@ export class Dinosaur {
 
   static jsonDinoExample =
     `{
-      "name": "Tyrannosaurus Rex",
-      "length": "12 mts",
-      "height": "4 mts",
-      "weight": "6 tons",
-      "diet": "Carnivorous",
-      "period": "Late Cretaceous",
-      "extinction": "65 million years",
-      "found": "Canada and USA",
-      "image": "/assets/images/rex.jpg"
+       "sede": "Alonso Ovalle",
+"idAsignatura": "PGY4121",
+"seccion": "001D",
+"nombreAsignatura": "Aplicaciones Móviles",
+"nombreProfesor": "Cristián Gómez Vega",
+"dia": "2022-08-09",
+"bloqueInicio": 7,
+"bloqueTermino": 9,
+"horaInicio": "13:00",
+"horaFin": "15:15" 
     }`;
   
     static jsonDinoEmpty =
     `{
-      "name": "",
-      "length": "",
-      "height": "",
-      "weight": "",
-      "diet": "",
-      "period": "",
-      "extinction": "",
-      "found": "",
-      "image": ""
+      "sede": "",
+      "idAsignatura": "",
+      "seccion": "",
+      "nombreAsignatura": "",
+      "nombreProfesor": "",
+      "dia": "",
+      "bloqueInicio": "",
+      "bloqueTermino": "",
+      "horaInicio": "",
+      "horaFin": "15:15"
+
     }`;
 
-   name = '';
-   length = '';
-   height = '';
-   weight = '';
-   diet = '';
-   period = '';
-   extinction = '';
-   found = '';
-   image = '';
+   sede = '';
+   idAsignatura = '';
+   seccion = '';
+   nombreAsignatura = '';
+   nombreProfesor = '';
+   dia = '';
+   bloqueInicio = '';
+   bloqueTermino = '';
+   horaInicio = '';
+   horaFin = '';
 
   constructor() { }
 
   public static getNewDinosaur(
-    name: string,
-    length: string,
-    height: string,
-    weight: string,
-    diet: string,
-    period: string,
-    extinction: string,
-    found: string,
-    image: string
+    sede: string,
+    idAsignatura: string,
+    seccion: string,
+    nombreAsignatura: string,
+    nombreProfesor: string,
+    dia: string,
+    bloqueInicio: string,
+    bloqueTermino: string,
+    horaInicio: string,
+    horaFin: string
+
   ) {
     const dino = new Dinosaur();
-    dino.name = name;
-    dino.length = length;
-    dino.height = height;
-    dino.weight = weight;
-    dino.diet = diet;
-    dino.period = period;
-    dino.extinction = extinction;
-    dino.found = found;
-    dino.image = image;
+    dino.sede = sede;
+    dino.idAsignatura = idAsignatura;
+    dino.seccion = seccion;
+    dino.nombreAsignatura = nombreAsignatura;
+    dino.nombreProfesor = nombreProfesor;
+    dino.dia = dia;
+    dino.bloqueInicio = bloqueInicio;
+    dino.bloqueTermino = bloqueTermino;
+    dino.horaInicio = horaInicio;
+    dino.horaFin = horaFin;
     return dino;
   }
 
@@ -76,15 +83,16 @@ export class Dinosaur {
     try {
       const json = JSON.parse(qr);
 
-      if ( json.name       !== undefined
-        && json.length     !== undefined
-        && json.height     !== undefined
-        && json.weight     !== undefined
-        && json.diet       !== undefined
-        && json.period     !== undefined
-        && json.extinction !== undefined
-        && json.found      !== undefined
-        && json.image      !== undefined)
+      if ( json.sede       !== undefined
+        && json.idAsignatura     !== undefined
+        && json.seccion     !== undefined
+        && json.nombreAsignatura     !== undefined
+        && json.nombreProfesor       !== undefined
+        && json.dia     !== undefined
+        && json.bloqueInicio !== undefined
+        && json.bloqueTermino      !== undefined
+        && json.horaInicio      !== undefined
+        && json.horaFin      !== undefined)
       {
         return true;
       }

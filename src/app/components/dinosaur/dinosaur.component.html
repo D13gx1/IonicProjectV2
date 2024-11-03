@@ -1,7 +1,54 @@
-<div class="title-container">
-  <h1 class="animated-title">Sistema de Asistencia</h1>
-</div>
-
 <ion-content>
+
+  <div class="background-image" *ngIf="dino"></div>
+
+  <ion-grid fixed *ngIf="dino" class="dino-content">
+    <ion-row>
+      <ion-col size="5">sede</ion-col>
+      <ion-col size="7">{{ dino.sede }}</ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="5">idAsignatura</ion-col>
+      <ion-col size="7">{{ dino.idAsignatura }}</ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="5">seccion</ion-col>
+      <ion-col size="7">{{ dino.seccion }}</ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="5">nombreAsignatura</ion-col>
+      <ion-col size="7">{{ dino.nombreAsignatura }}</ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="5">nombreProfesor</ion-col>
+      <ion-col size="7">{{ dino.nombreProfesor }}</ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="5">dia</ion-col>
+      <ion-col size="7">{{ dino.dia }}</ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="5">bloqueInicio</ion-col>
+      <ion-col size="7">{{ dino.bloqueInicio }}</ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="5">bloqueTermino</ion-col>
+      <ion-col size="7">{{ dino.bloqueTermino }}</ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="5">horaInicio</ion-col>
+      <ion-col size="7">{{ dino.horaInicio }}</ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="5">horaFin</ion-col>
+      <ion-col size="7">{{ dino.horaFin }}</ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <div *ngIf="!dino" class="center-frame">
+    <div class="picture-frame ion-text-center">
+      <img class="you-must-scan" src="/assets/images/you-must-scan.png">
+    </div>
+  </div>
 
 </ion-content>
