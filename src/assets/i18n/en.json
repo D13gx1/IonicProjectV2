@@ -1,11 +1,11 @@
 {
-    "AppName": "Sistema de Asistencias",
+    "AppName": "Assistance System",
     "AuthorText": "Developed by:",
     "Author": "Cristián Gómez Vega",
     "Language": "Language",
     "Language.English": "English",
     "Language.Spanish": "Español",
-    "Language.Mapudungun": "Mapudungun",
+    "Language.French": "Frances",
     
     "Start.StartNewExperience": "Start a new experience",
 
@@ -15,7 +15,7 @@
     "Login.Label.Password": "Password",
     "Login.Placeholder.Password": "Enter your password here",
     "Login.Button.Login": "Login",
-    "Login.Button.rute": "ruta",
+    "Login.Button.rute": "rute",
     "Login.Button.ForgotPassword": "Forgot my password",
     "Login.Button.DarkMode": "Dark Mode",
 
