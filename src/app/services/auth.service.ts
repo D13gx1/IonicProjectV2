@@ -118,4 +118,9 @@ export class AuthService {
       return false;
     }
   }
+
+  getCurrentUserId(): string | null {
+    return this.authUser.value ? this.authUser.value.userName : null;
+  }
+  
 }

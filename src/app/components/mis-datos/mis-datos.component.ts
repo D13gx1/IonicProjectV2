@@ -7,6 +7,7 @@ import { IonContent, IonItem, IonLabel, IonInput, IonButton, IonSelect, IonSelec
 import { CommonModule } from '@angular/common';
 import { convertDateToString, convertStringToDate } from 'src/app/tools/date-functions';
 import { showToast } from 'src/app/tools/message-functions';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-mis-datos',
@@ -32,7 +33,8 @@ export class MisDatosComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder, 
-    private databaseService: DatabaseService
+    private databaseService: DatabaseService,
+    private authService: AuthService  // Inyecta AuthService aquí
   ) {
     this.userForm = this.fb.group({
       userName: [''],
@@ -50,8 +52,13 @@ export class MisDatosComponent implements OnInit {
   }
 
   async ngOnInit() {
-    this.currentUser = await this.databaseService.readUser('atorres') ?? new User();
-    this.loadUserData();
+    const currentUserID = this.authService.getCurrentUserId();
+    if (currentUserID) {
+      this.currentUser = await this.databaseService.readUser(currentUserID) ?? new User();
+      this.loadUserData();
+    } else {
+      showToast('Error: No se encontró un usuario autenticado');
+    }
   }
 
   loadUserData() {
