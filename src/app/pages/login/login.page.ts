@@ -67,7 +67,7 @@ export class LoginPage implements ViewWillEnter {
     this.authService.login(this.correo, this.password).then(
       (result) => {
         // Si el inicio de sesión es exitoso
-        this.router.navigate(['/tabs/codigo-qr']);
+        this.router.navigate(['/home']);
       },
       (error) => {
         // Maneja el error de inicio de sesión (puedes mostrar un mensaje)

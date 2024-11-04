@@ -1,29 +1,9 @@
-<!-- src/app/tabs/mi-info/mi-info.page.html -->
-
-
 <div class="title-container">
   <h1 class="animated-title">Sistema de Asistencia</h1>
 </div>
 
-<ion-content>
-
-  <ion-button *ngIf="!escaneando" (click)="comenzarEscaneoQR()" expand="full" shape="round">
-    <ion-icon slot="start" name="videocam-outline"></ion-icon>
-    Comenzar Escaneo de QR
-  </ion-button>
-
-  <ion-button *ngIf="escaneando" (click)="detenerEscaneoQR()" expand="full" shape="round">
-    <ion-icon slot="start" name="stopcircle-outline"></ion-icon>
-    Detener Escaneo de QR
-  </ion-button>
-
-  <ion-button (click)="limpiarDatos()" expand="full" shape="round">
-    <ion-icon slot="start" name="trash-outline"></ion-icon>
-    Limpiar Datos
-  </ion-button>
-
-  <video #video [hidden]="!escaneando" width="100%"></video>
-  <canvas #canvas [hidden]> </canvas>
-
-  
-</ion-content>
+<div class="ion-text-center">
+  <h1> Bienvenido(a) {{ user.firstName}} {{ user.lastName }}  </h1>
+ 
+  <p>Para registrar tu asistencia, escanea el código QR usando el botón en el encabezado.</p>
+</div>

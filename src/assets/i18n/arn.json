@@ -21,7 +21,7 @@
 
     "WelcomePage.Title.Wellcome": "¡Tüfachi mülenmi Angry-Dinosaurs!",
 
-    "HomePage.Button.CodigoQr": "Codigo QR",
+    "HomePage.Button.home": "inicio",
     "HomePage.Button.Scan": "Escanear",
     "HomePage.Button.MyClass": "Mi clase",
     "HomePage.Button.Forum": "Foro",

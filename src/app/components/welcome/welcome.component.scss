@@ -38,28 +38,19 @@
   }
 }
 
-.ion-text-center {
-  margin: 20px; /* Espaciado alrededor del contenedor */
+.welcome-card {
+  text-align: center;
+  margin: 20px;
+  --background: #f0f4f8;
 }
 
-.attendance-message {
-  margin: 15px 0; /* Espaciado arriba y abajo del mensaje */
-  font-size: 18px; /* Tamaño de fuente del mensaje */
-  color: #666; /* Color del texto */
+ion-card-title {
+  font-size: 1.5em;
+  font-weight: bold;
+  color: #004080;
 }
 
-/* Estilo opcional para el botón de cerrar sesión */
-ion-button {
-  margin-top: 20px; /* Espacio arriba del botón */
-}
-
-/* Estilos de hover para el botón */
-ion-button:hover {
-  background-color: #f0f0f0; /* Color de fondo al pasar el mouse */
-  color: #333; /* Color del texto al pasar el mouse */
-}
-
-/* Estilos de active para el botón */
-ion-button:active {
-  transform: scale(0.95); /* Efecto de pulsación al hacer clic */
+ion-card-content p {
+  font-size: 1.1em;
+  color: #333;
 }
