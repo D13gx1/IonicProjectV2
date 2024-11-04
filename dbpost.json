@@ -1,28 +1,25 @@
 {
   "posts": [
     {
-      "id": "2e92",
-      "title": "fdfdf",
-      "body": "dffddf",
-      "author": "AnaA Torres",
-      "date": "2024-11-03T02:32:31.882Z",
-      "userId": 1
+      "id": "1",
+      "title": "programacion mobile",
+      "body": "las clases con el profesor cristian me parecen muy buenas y divertidas!!!",
+      "author": "Ana Torres",
+      "date": "2024-11-04T00:00:23.935Z"
     },
     {
-      "id": "9451",
-      "title": "sdds",
-      "body": "dsds",
-      "author": "AnaA Torres",
-      "date": "2024-11-03T16:12:39.479Z",
-      "userId": 1
+      "id": "2",
+      "title": "holaaa ayuda",
+      "body": "necesito ayuda con ionic no entiendo algunas cosas porfavor",
+      "author": "Carla Mujica",
+      "date": "2024-11-04T00:01:13.513Z"
     },
     {
-      "id": "7bf3",
-      "title": "dss",
-      "body": "dsds",
-      "author": "AnaA Torres",
-      "date": "2024-11-03T16:13:05.060Z",
-      "userId": 1
+      "id": "3",
+      "title": "buen foro!!",
+      "body": "el foro me parece muy bueno y necesario!!",
+      "author": "Juan Pérez",
+      "date": "2024-11-04T00:02:19.680Z"
     }
   ]
 }
