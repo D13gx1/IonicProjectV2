@@ -34,49 +34,69 @@ export class MisDatosComponent implements OnInit {
   constructor(
     private fb: FormBuilder, 
     private databaseService: DatabaseService,
-    private authService: AuthService  // Inyecta AuthService aquí
+    private authService: AuthService
   ) {
     this.userForm = this.fb.group({
-      userName: [''],
-      email: [''],
-      password: [''],
-      secretQuestion: [''],
-      secretAnswer: [''],
-      firstName: [''],
-      lastName: [''],
-      educationalLevel: [''],
-      dateOfBirth: ['', [Validators.pattern(/^\d{2}\/\d{2}\/\d{4}$/)]],
-      address: [''],
-      image: ['']
+      userName: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', Validators.required],
+      secretQuestion: ['', Validators.required],
+      secretAnswer: ['', Validators.required],
+      firstName: ['', Validators.required],
+      lastName: ['', Validators.required],
+      educationalLevel: ['', Validators.required],
+      dateOfBirth: ['', [Validators.required, Validators.pattern(/^\d{2}\/\d{2}\/\d{4}$/)]],
+      address: ['', Validators.required],
+      image: ['', Validators.required]
     });
   }
 
   async ngOnInit() {
-    const currentUserID = this.authService.getCurrentUserId();
-    if (currentUserID) {
-      this.currentUser = await this.databaseService.readUser(currentUserID) ?? new User();
-      this.loadUserData();
-    } else {
-      showToast('Error: No se encontró un usuario autenticado');
+    try {
+      const currentUserID = await this.authService.getCurrentUserId();
+      if (currentUserID) {
+        const user = await this.databaseService.readUser(currentUserID);
+        if (user) {
+          this.currentUser = user;
+          this.loadUserData();
+        } else {
+          showToast('Error: Usuario no encontrado');
+        }
+      } else {
+        showToast('Error: No hay usuario autenticado');
+      }
+    } catch (error) {
+      console.error('Error en ngOnInit:', error);
+      showToast('Error al cargar los datos del usuario');
     }
   }
 
   loadUserData() {
-    const formData = {
-      ...this.currentUser,
-      dateOfBirth: this.currentUser.dateOfBirth instanceof Date 
-        ? convertDateToString(this.currentUser.dateOfBirth)
-        : ''
-    };
-    this.userForm.patchValue(formData);
+    if (this.currentUser) {
+      const formData = {
+        userName: this.currentUser.userName,
+        email: this.currentUser.email,
+        password: this.currentUser.password,
+        secretQuestion: this.currentUser.secretQuestion,
+        secretAnswer: this.currentUser.secretAnswer,
+        firstName: this.currentUser.firstName,
+        lastName: this.currentUser.lastName,
+        educationalLevel: this.currentUser.educationalLevel?.id,
+        dateOfBirth: this.currentUser.dateOfBirth instanceof Date 
+          ? convertDateToString(this.currentUser.dateOfBirth)
+          : '',
+        address: this.currentUser.address,
+        image: this.currentUser.image
+      };
+      this.userForm.patchValue(formData);
+    }
   }
 
   onDateInput(event: any) {
-    let value = event.target.value.replace(/\D/g, ''); // Solo permitir números
+    let value = event.target.value.replace(/\D/g, '');
     if (value.length > 0) {
-      // Formatear como dd/mm/yyyy
       if (value.length > 4) {
-        value = value.slice(0, 8); // Limitar a 8 dígitos
+        value = value.slice(0, 8);
         value = value.replace(/(\d{2})(\d{2})(\d{4})/, '$1/$2/$3');
       } else if (value.length > 2) {
         value = value.replace(/(\d{2})(\d{2})/, '$1/$2/');
@@ -97,22 +117,44 @@ export class MisDatosComponent implements OnInit {
           return;
         }
 
+        // Convertir fecha
         const dateOfBirth = convertStringToDate(formValues.dateOfBirth);
         
-        const updatedUser = {
-          ...this.currentUser,
-          ...formValues,
-          dateOfBirth
-        };
+        // Obtener objeto EducationalLevel
+        const educationalLevel = EducationalLevel.findLevel(formValues.educationalLevel);
+        if (!educationalLevel) {
+          showToast('Error: Nivel educacional inválido');
+          return;
+        }
 
+        // Crear usuario actualizado
+        const updatedUser = User.getNewUsuario(
+          formValues.userName,
+          formValues.email,
+          formValues.password,
+          formValues.secretQuestion,
+          formValues.secretAnswer,
+          formValues.firstName,
+          formValues.lastName,
+          educationalLevel,
+          dateOfBirth,
+          formValues.address,
+          formValues.image
+        );
+
+        // Guardar en base de datos
         await this.databaseService.saveUser(updatedUser);
+        
+        // Actualizar usuario autenticado
+        await this.authService.saveAuthUser(updatedUser);
+        
         showToast('Datos actualizados correctamente');
       } catch (error) {
         console.error('Error al guardar:', error);
-        showToast('Error al actualizar los datos. Verifica el formato de la fecha (dd/mm/yyyy)');
+        showToast('Error al actualizar los datos');
       }
     } else {
-      showToast('Por favor, verifica los datos ingresados');
+      showToast('Por favor, completa todos los campos correctamente');
     }
   }
 }
