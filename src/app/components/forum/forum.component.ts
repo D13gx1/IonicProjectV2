@@ -6,7 +6,7 @@ import { AlertController, IonFabButton, IonFab, IonList, IonCardContent, IonHead
   , IonCardSubtitle, IonItem, IonLabel, IonInput, IonTextarea
   , IonGrid, IonRow, IonCol, IonButton, IonIcon, IonContent
   , IonFabList } from '@ionic/angular/standalone';
-import { pencilOutline, trashOutline, add } from 'ionicons/icons';
+import { pencilOutline, trashOutline, add, createOutline, bookOutline } from 'ionicons/icons';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Post } from 'src/app/model/post';
@@ -41,7 +41,7 @@ export class ForumComponent implements OnInit, OnDestroy {
     private auth: AuthService,
     private alertController: AlertController
   ) {
-    addIcons({ pencilOutline, trashOutline, add });
+    addIcons({createOutline,bookOutline,pencilOutline,trashOutline,add});
   }
 
   async ngOnInit() {

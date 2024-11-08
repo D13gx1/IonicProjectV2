@@ -1,99 +1,116 @@
-.title-container {
-  width: 100%;
+/* General */
+ion-content {
+  --ion-background-color: #f4f6f8;
+  font-family: 'Roboto', sans-serif;
+  color: #2d3436;
+}
+
+/* Estilos para el formulario de gestión de publicaciones */
+.card-form {
+  background: linear-gradient(135deg, #eceff4 0%, #dfe7ec 100%);
+  border-radius: 12px;
+  margin: 16px;
+  padding: 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  animation-duration: 0.5s;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.card-form:hover {
+  transform: scale(1.02);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+}
+
+/* Títulos */
+.card-form ion-card-title,
+.recent-posts-card ion-card-title {
+  font-weight: bold;
+  font-family: 'Poppins', sans-serif;
+}
+
+/* Card para las publicaciones recientes */
+.recent-posts-card {
+  background: linear-gradient(135deg, #f2f4f8 0%, #e3e9ed 100%);
+  border-radius: 12px;
+  margin: 16px;
+  padding: 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  animation-duration: 0.7s;
+}
+
+/* Lista de publicaciones */
+.post-list {
+  padding: 0;
+}
+
+/* Estilos para cada publicación */
+.post-item {
+  background: linear-gradient(135deg, #ffffff 0%, #eef2f6 100%);
+  border-radius: 8px;
+  margin: 8px 0;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
   overflow: hidden;
-  padding: 0px 0;
-  background: var(--ion-color-primary);
-  margin-bottom: 20px;
-  position: sticky;
+  transition: transform 0.3s, box-shadow 0.3s;
+  animation-duration: 0.7s;
+  position: relative;
+}
+
+.post-item::before {
+  content: "";
+  position: absolute;
   top: 0;
-  z-index: 1000;
-}
-
-.animated-title {
-  color: white;
-  font-size: 24px;
-  font-weight: bold;
-  animation: slideTitle 10s linear infinite;
-  white-space: nowrap;
-  margin: 0;
-  padding: 0 20px;
-  text-align: center;
-}
-
-@keyframes slideTitle {
-  0% {
-    transform: translateX(-100%);
-  }
-  
-  50% {
-    transform: translateX(100%);
-  }
-  
-  50.1% {
-    transform: translateX(-100%);
-  }
-  
-  100% {
-    transform: translateX(-100%);
-  }
-}
-
-.tituloPrincipal {
-  font-size: 1em;
-  color: darkblue;
-  font-weight: bold;
-  text-shadow: darkgray;
-}
-
-.publicacionSeleccionada  {
-  font-size: small !important;
-  color: darkgreen !important;
-  font-weight: bolder;
-}
-
-h6 {
-  color: darkgreen;
-}
-
-h4 {
-  color: darkblue;
-  font-weight: bold;
-}
-
-.sin-bordes {
-  box-shadow: none;
-}
-
-.con-padding-top {
-  margin-top: 15px !important;
-}
-
-.custom-modal {
-  --width: auto; /* Ajusta automáticamente al ancho del contenido */
-  --height: auto; /* Ajusta automáticamente al alto del contenido */
-  --max-width: 90%; /* Puedes ajustar el máximo ancho */
-  --max-height: 90%; /* Puedes ajustar el máximo alto */
-  // display: flex;
-  // align-items: center;
-  // justify-content: center;
-}
-
-/* Estilo adicional para asegurar que el contenido se ajuste */
-.modal-content {
+  left: 0;
+  height: 5px;
   width: 100%;
-  max-height: 100%;
-  overflow-y: auto;
+  background: gray;
 }
 
-.block {
-  width: 100%;
-  height: 300px;
+/* Tipografía para títulos y subtítulos */
+.post-item ion-card-header h6 {
+  font-size: 0.9rem;
+  color: #7f8c8d;
+  font-weight: 400;
+}
+
+.post-item ion-card-header h4 {
+  margin: 4px 0 0;
+  font-size: 1.2rem;
+  color: #2c3e50;
+  font-weight: 700;
+}
+
+/* Botones de acción */
+.post-actions {
   display: flex;
-  align-items: center;
-  justify-content: center;
+  justify-content: flex-end;
+  gap: 10px;
+  padding: 0 16px 16px;
 }
 
-ion-modal {
-  --height: auto;
+.post-actions ion-fab-button {
+  --border-radius: 50%;
+  --background: #0b1e2b;
+  --color: #ffffff;
+  transition: transform 0.3s;
 }
 
+.post-actions ion-fab-button:hover {
+  transform: scale(1.1) rotate(10deg);
+
+}
+
+/* Efecto de transición en botones del formulario */
+.button-group ion-button {
+  --color: #ffffff;
+  --border-radius: 50px;
+  transition: background 0.3s;
+}
+
+.button-group ion-button:hover {
+  background: linear-gradient(45deg, #5dade2, #3498db);
+}
+
+.button-group ion-button[color="light"] {
+  --background: #bdc3c7;
+  --color: #2c3e50;
+}

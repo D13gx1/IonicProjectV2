@@ -1,18 +1,12 @@
 {
   "posts": [
     {
-      "id": "1",
-      "title": "programacion mobile",
-      "body": "las clases con el profesor cristian me parecen muy buenas y divertidas!!!",
-      "author": "Ana Torres",
-      "date": "2024-11-04T00:00:23.935Z"
-    },
-    {
       "id": "2",
       "title": "holaaa ayuda",
       "body": "necesito ayuda con ionic no entiendo algunas cosas porfavor",
-      "author": "Carla Mujica",
-      "date": "2024-11-04T00:01:13.513Z"
+      "author": "Ana Torres",
+      "date": "2024-11-04T00:01:13.513Z",
+      "authorImage": ""
     },
     {
       "id": "3",
@@ -20,6 +14,13 @@
       "body": "el foro me parece muy bueno y necesario!!",
       "author": "Juan Pérez",
       "date": "2024-11-04T00:02:19.680Z"
+    },
+    {
+      "id": "4",
+      "title": "hola a todoos",
+      "body": "holaaaaaaaaaa",
+      "author": "Ana Torres",
+      "date": "2024-11-07T22:38:23.123Z"
     }
   ]
 }
