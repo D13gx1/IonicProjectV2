@@ -64,5 +64,10 @@
     "ThemePage.Form.DescriptionLabel": "Descripción",
     "ThemePage.Form.DescriptionPlaceholder": "Escribe aquí una descripción...",
     "ThemePage.Form.ToggleLabel": "Activar notificaciones",
-    "ThemePage.Form.CheckboxLabel": "Acepto los términos"
+    "ThemePage.Form.CheckboxLabel": "Acepto los términos",
+
+    "QRInfo": "Para registrar tu asistencia, escanea el código QR usando el botón en el encabezado",
+    "Welcome" : "¡Bienvenido(a)",
+    "MyClassInfo" : "Para Ver tu clase necesitas Escanear el codigo QR",
+    "PublicationsManagement": "Gestión de Publicaciones"
 }
