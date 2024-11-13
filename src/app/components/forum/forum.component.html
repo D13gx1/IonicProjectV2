@@ -2,25 +2,25 @@
   <!-- Formulario para crear o editar publicaciones -->
   <ion-card class="card-form animate__animated animate__backInDown">
     <ion-card-header>
-      <ion-card-title><ion-icon name="create-outline"></ion-icon> {{ 'PublicationsManagement' | translate }}</ion-card-title><!-- Gestión de Publicaciones -->
+      <ion-card-title><ion-icon name="create-outline"></ion-icon> {{ 'PublicationsManagement' | translate }}</ion-card-title>
       <ion-card-subtitle>{{ selectedPostText }}</ion-card-subtitle>
     </ion-card-header>
 
     <ion-card-content>
       <ion-item class="input-item animate__animated animate__fadeInLeft">
-        <ion-label position="floating" color="primary">Título</ion-label>
-        <ion-input [(ngModel)]="post.title" placeholder="Ingresa el título de la publicación"></ion-input>
+        <ion-label position="floating" color="primary">{{ 'Title' | translate }}</ion-label>
+        <ion-input [(ngModel)]="post.title" placeholder="{{ 'EnterPostTitle' | translate }}"></ion-input>
       </ion-item>
 
       <ion-item class="input-item animate__animated animate__fadeInRight">
-        <ion-label position="floating" color="primary">Descripción</ion-label>
-        <ion-textarea [(ngModel)]="post.body" placeholder="Escribe el contenido de la publicación"></ion-textarea>
+        <ion-label position="floating" color="primary">{{ 'Description' | translate }}</ion-label>
+        <ion-textarea [(ngModel)]="post.body" placeholder="{{ 'EnterPostContent' | translate }}"></ion-textarea>
       </ion-item>
 
       <div class="button-group animate__animated animate__fadeInUp">
-        <ion-button color="light" shape="round" (click)="cleanPost()">Limpiar</ion-button>
+        <ion-button color="light" shape="round" (click)="cleanPost()">{{ 'Clear' | translate }}</ion-button>
         <ion-button color="primary" shape="round" (click)="savePost()">
-          {{ post.id ? 'Actualizar' : 'Guardar' }}
+          {{ post.id ? ('Update' | translate) : ('Save' | translate) }}
         </ion-button>
       </div>
     </ion-card-content>
@@ -29,14 +29,14 @@
   <!-- Lista de publicaciones recientes -->
   <ion-card class="recent-posts-card animate__animated animate__fadeInUp">
     <ion-card-header>
-      <ion-card-title><ion-icon name="book-outline"></ion-icon> Publicaciones Recientes</ion-card-title>
+      <ion-card-title><ion-icon name="book-outline"></ion-icon> {{ 'RecentPosts' | translate }}</ion-card-title>
     </ion-card-header>
 
     <ion-card-content>
       <ion-list class="post-list">
         <ion-card *ngFor="let post of posts; let i = index" class="post-item animate__animated animate__zoomIn animate__delay-{{ i * 0.2 }}s">
           <ion-card-header>
-            <h6>(Publicación #{{ i + 1 }}) {{ post.author }}</h6>
+            <h6>({{ 'PostNumber' | translate }}{{ i + 1 }}) {{ 'Author' | translate }}: {{ post.author }}</h6>
             <h4>{{ post.title }}</h4>
           </ion-card-header>
 
@@ -46,10 +46,10 @@
 
           <div class="post-actions">
             <ion-fab-button size="small" color="secondary" (click)="editPost(post)" [disabled]="!post?.id">
-              <ion-icon name="pencil-outline"></ion-icon>
+              <ion-icon name="pencil-outline"></ion-icon> 
             </ion-fab-button>
             <ion-fab-button size="small" color="danger" (click)="deletePost(post)" [disabled]="!post?.id">
-              <ion-icon name="trash-outline"></ion-icon>
+              <ion-icon name="trash-outline"></ion-icon> 
             </ion-fab-button>
           </div>
         </ion-card>

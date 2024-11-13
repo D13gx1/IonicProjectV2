@@ -69,5 +69,40 @@
     "QRInfo": "Para registrar tu asistencia, escanea el código QR usando el botón en el encabezado",
     "Welcome" : "¡Bienvenido(a)",
     "MyClassInfo" : "Para Ver tu clase necesitas Escanear el codigo QR",
-    "PublicationsManagement": "Gestión de Publicaciones"
+    
+    "PublicationsManagement": "Gestión de Publicaciones",
+    "Title": "Título",
+    "EnterPostTitle": "Ingresa el título de la publicación",
+    "Description": "Descripción",
+    "EnterPostContent": "Escribe el contenido de la publicación",
+    "Clear": "Limpiar",
+    "Save": "Guardar",
+    "Update": "Actualizar",
+    "RecentPosts": "Publicaciones Recientes",
+    "PostNumber": "Publicación #",
+    "Author": "Autor",
+
+    "User": "Usuario",
+  "Email": "Correo Electrónico",
+  "Password": "Contraseña",
+  "SecretQuestion": "Pregunta Secreta",
+  "SecretAnswer": "Respuesta Secreta",
+  "FirstName": "Nombre",
+  "LastName": "Apellido",
+  "EducationalLevel": "Nivel Educacional",
+  "DateOfBirth": "Fecha de Nacimiento (dd/mm/yyyy)",
+  "Address": "Dirección",
+  "ProfileImage": "Imagen de Perfil",
+  "EnterImageUrl": "URL o nombre del archivo",
+  "SaveChanges": "Guardar Cambios",
+
+  "RecoverPassword": "Recuperar Contraseña",
+  "Step1EnterEmail": "Paso 1: Ingresa tu correo",
+  "EnterYourEmail": "Ingrese su correo",
+  "VerifyEmail": "Verificar Correo",
+  "Step2AnswerSecret": "Paso 2: Responde la pregunta secreta",
+  "Answer": "Respuesta",
+  "VerifyAnswer": "Verificar Respuesta",
+  "BackToLogin": "Volver al Login"
+    
 }
