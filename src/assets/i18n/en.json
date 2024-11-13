@@ -21,11 +21,12 @@
 
     "WelcomePage.Title.Wellcome": "Welcome to Angry-Dinosaurs!",
 
-    "HomePage.Button.home": "home",
-    "HomePage.Button.Scan": "Escanear",
-    "HomePage.Button.MyClass": "Mi clase",
-    "HomePage.Button.Forum": "Foro",
-    "HomePage.Button.Datos": "Datos",
+    "HomePage.Button.home": "Home",
+    "HomePage.Button.Scan": "Scan",
+    "HomePage.Button.MyClass": "My Class",
+    "HomePage.Button.Forum": "Forum",
+    "HomePage.Button.Datos": "Data",
+
 
     "ThemePage.Label.ColorTheme": "Color Theme:",
     "ThemePage.Color.Light": "Light",
