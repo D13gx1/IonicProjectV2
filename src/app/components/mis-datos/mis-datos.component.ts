@@ -8,6 +8,7 @@ import { CommonModule } from '@angular/common';
 import { convertDateToString, convertStringToDate } from 'src/app/tools/date-functions';
 import { showToast } from 'src/app/tools/message-functions';
 import { AuthService } from 'src/app/services/auth.service';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-mis-datos',
@@ -23,7 +24,8 @@ import { AuthService } from 'src/app/services/auth.service';
     IonButton,
     IonSelect,
     IonSelectOption,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    TranslateModule
   ]
 })
 export class MisDatosComponent implements OnInit {

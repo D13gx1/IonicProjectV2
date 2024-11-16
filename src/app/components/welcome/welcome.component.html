@@ -1,7 +1,7 @@
 <ion-toolbar>
 <div class="ion-text-center">
-  <h1> Bienvenido(a) {{ user.firstName}} {{ user.lastName }}  </h1>
-  <p>Para registrar tu asistencia, escanea el código QR usando el botón en el encabezado.</p>
+  <h1> {{ 'Welcome' | translate }} {{ user.firstName}} {{ user.lastName }} ! </h1>
+  <p> {{ 'QRInfo' | translate }} </p>
 </div>
 <div class="img-qr">
   <img src="../../../assets/img/1-removebg-preview.png" class="img-1">

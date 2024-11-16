@@ -6,6 +6,7 @@ import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/services/auth.service';
 import { addIcons } from 'ionicons';
 import { checkmarkCircle } from 'ionicons/icons';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-dinosaur',
@@ -19,7 +20,8 @@ import { checkmarkCircle } from 'ionicons/icons';
     IonCol, 
     IonIcon,
     CommonModule, 
-    FormsModule
+    FormsModule,
+    TranslateModule
   ]
 })
 export class DinosaurComponent implements OnDestroy {

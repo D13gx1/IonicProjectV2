@@ -5,6 +5,7 @@ import { IonContent, IonHeader, IonTitle, IonToolbar, IonButton, IonInput, NavCo
 import { DatabaseService } from '../../services/database.service';
 import { User } from '../../model/user';
 import { Router } from '@angular/router';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-recuperar',
@@ -26,7 +27,8 @@ import { Router } from '@angular/router';
     IonItem,
     IonButton,
     IonInput,
-    IonToast
+    IonToast,
+    TranslateModule
   ]
 })
 export class RecuperarPage implements OnInit {

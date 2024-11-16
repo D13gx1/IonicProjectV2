@@ -2,13 +2,12 @@
   <ion-toolbar color="primary">
     <ion-buttons slot="end">
       <ion-button (click)="irALogin()">
-        <ion-icon name="arrow-back"></ion-icon> <!-- Icono opcional -->
+        <ion-icon name="arrow-back"></ion-icon>
       </ion-button>
     </ion-buttons>
-    <ion-title>Recuperar Contraseña</ion-title>
+    <ion-title>{{ 'RecoverPassword' | translate }}</ion-title>
   </ion-toolbar>
 </ion-header>
-
 
 <ion-content class="ion-padding">
   <ion-toast
@@ -18,37 +17,37 @@
     (didDismiss)="showToast = false">
   </ion-toast>
 
-  <ion-card *ngIf="showEmailInput"> <!-- Se muestra solo si showEmailInput es true -->
+  <ion-card *ngIf="showEmailInput">
     <ion-card-header>
-      <ion-card-title>Recuperar Contraseña</ion-card-title>
-      <ion-card-subtitle>Paso 1: Ingresa tu correo</ion-card-subtitle>
+      <ion-card-title>{{ 'RecoverPassword' | translate }}</ion-card-title>
+      <ion-card-subtitle>{{ 'Step1EnterEmail' | translate }}</ion-card-subtitle>
     </ion-card-header>
     <ion-card-content>
       <ion-item>
-        <ion-input type="email" [(ngModel)]="email" placeholder="Ingrese su correo" required></ion-input>
+        <ion-input type="email" [(ngModel)]="email" placeholder="{{ 'EnterYourEmail' | translate }}" required></ion-input>
       </ion-item>
-      <ion-button expand="full" (click)="verificarCorreo()">Verificar Correo</ion-button>
+      <ion-button expand="full" (click)="verificarCorreo()">{{ 'VerifyEmail' | translate }}</ion-button>
     </ion-card-content>
   </ion-card>
 
-  <ion-card *ngIf="showSecretQuestion"> <!-- Se muestra solo si showSecretQuestion es true -->
+  <ion-card *ngIf="showSecretQuestion">
     <ion-card-header>
-      <ion-card-title>Paso 2: Responde la pregunta secreta</ion-card-title>
+      <ion-card-title>{{ 'Step2AnswerSecret' | translate }}</ion-card-title>
     </ion-card-header>
     <ion-card-content>
-      <p>{{ secretQuestion }}</p> <!-- Mostrar la pregunta secreta dinámica -->
+      <p>{{ secretQuestion }}</p>
       <ion-item>
-        <ion-input type="text" [(ngModel)]="answer" placeholder="Respuesta" required></ion-input>
+        <ion-input type="text" [(ngModel)]="answer" placeholder="{{ 'Answer' | translate }}" required></ion-input>
       </ion-item>
-      <ion-button expand="full" (click)="verificarRespuesta()">Verificar Respuesta</ion-button>
+      <ion-button expand="full" (click)="verificarRespuesta()">{{ 'VerifyAnswer' | translate }}</ion-button>
     </ion-card-content>
   </ion-card>
 </ion-content>
 
 <ion-content class="ion-padding">
-  <div class="centered-button" >
+  <div class="centered-button">
     <ion-button expand="full" (click)="irALogin()" color="secondary">
-      Volver al Login
+      {{ 'BackToLogin' | translate }}
     </ion-button>
   </div>
 </ion-content>
