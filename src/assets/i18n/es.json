@@ -16,6 +16,7 @@
     "Login.Placeholder.Password": "Ingresa aquí tu contraseña",
     "Login.Button.Login": "Ingresar",
     "Login.Button.rute": "ruta",
+    "Login.Button.Register" : "Registrarse",
     "Login.Button.ForgotPassword": "Olvidé mi contraseña",
     "Login.Button.DarkMode": "Oscuro",
 

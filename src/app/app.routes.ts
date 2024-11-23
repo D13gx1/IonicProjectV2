@@ -39,8 +39,14 @@ export const routes: Routes = [
     loadComponent: () => import('./pages/recuperar/recuperar.page').then(m => m.RecuperarPage)
   },
   {
+    path: 'registrarme',
+    loadComponent: () => import('./pages/registrarme/registrarme.page').then( m => m.RegistrarmePage)
+  },
+  {
     // Ruta comodín para cualquier ruta no definida
     path: '**',
     redirectTo: 'login'
-  }
+  },
+  
+
 ];
