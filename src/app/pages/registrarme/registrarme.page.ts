@@ -128,4 +128,8 @@ export class RegistrarmePage {
       showToast('Por favor, completa todos los campos correctamente');
     }
   }
+
+  irALogin() {
+    this.router.navigate(['/login']); // Reemplaza '/login' con la ruta correcta
+  }
 }
