@@ -76,9 +76,8 @@ export class LoginPage implements ViewWillEnter {
     );
   }
 
-
   registerNewUser() {
-
+    this.router.navigate(['/registrarme'])
   }
 
   passwordRecovery() {

@@ -16,6 +16,7 @@
   "Login.Placeholder.Password": "Enter your password here",
   "Login.Button.Login": "Login",
   "Login.Button.rute": "rute",
+  "Login.Button.Register" : "Sign in",
   "Login.Button.ForgotPassword": "Forgot my password",
   "Login.Button.DarkMode": "Dark Mode",
 
