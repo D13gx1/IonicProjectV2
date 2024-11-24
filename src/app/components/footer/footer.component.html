@@ -5,12 +5,12 @@
       (ionChange)="sendClickEvent($event)"
       [(ngModel)]="selectedButton">
 
-      <ion-segment-button value="welcome">
+      <ion-segment-button value="welcome" *ngIf="!isAdmin">
         <ion-icon name="home-outline"></ion-icon>
         {{ "HomePage.Button.home" | translate }}
       </ion-segment-button>
       
-      <ion-segment-button #dinoButton value="mi-clase">
+      <ion-segment-button #dinoButton value="mi-clase" *ngIf="!isAdmin">
         <ion-icon name="book-outline"></ion-icon>
         {{ "HomePage.Button.MyClass" | translate }}
       </ion-segment-button>
@@ -25,7 +25,11 @@
         {{ "HomePage.Button.Datos"| translate }}
       </ion-segment-button>
 
-    </ion-segment>
+      <ion-segment-button value="usuarios" *ngIf="isAdmin">
+        <ion-icon name="people-outline"></ion-icon>
+        Usuarios
+      </ion-segment-button>
 
+    </ion-segment>
   </ion-toolbar>
 </ion-footer>

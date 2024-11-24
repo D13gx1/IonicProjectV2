@@ -72,29 +72,38 @@ export class AuthService {
 
   async login(userName: string, password: string): Promise<boolean> {
     try {
-      const authUser = await this.storage.get(this.storageAuthUserKey);
-
-      if (authUser) {
-        this.authUser.next(authUser);
-        this.isFirstLogin.next(false);
-        await this.router.navigate(['/home']);
-        return true;
-      } else {
-        const user = await this.db.findUser(userName, password);
-
-        if (user) {
-          showToast(`¡Bienvenid@ ${user.firstName} ${user.lastName}!`);
-          await this.saveAuthUser(user);
-          this.isFirstLogin.next(true);
-          await this.router.navigate(['/home']);
-          return true;
-        } else {
-          showToast('El correo o la contraseña son incorrectos');
-          return false;
-        }
+      // Limpiar sesión anterior
+      await this.deleteAuthUser();
+      await this.storage.remove(this.storageQrCodeKey);
+      
+      // Buscar usuario en BD
+      const dbUser = await this.db.findUser(userName, password);
+      
+      // Si no existe el usuario
+      if (!dbUser) {
+        showToast('El usuario no existe o las credenciales son incorrectas');
+        return false;
       }
+
+      // Validación adicional de campos requeridos
+      if (!dbUser.userName || !dbUser.email || !dbUser.firstName || !dbUser.lastName) {
+        showToast('Error en los datos del usuario');
+        return false;
+      }
+
+      // Guardar usuario autenticado
+      await this.saveAuthUser(dbUser);
+      this.authUser.next(dbUser);
+      this.isFirstLogin.next(true);
+      
+      // Mostrar mensaje de bienvenida y navegar al home
+      showToast(`¡Bienvenid@ ${dbUser.firstName} ${dbUser.lastName}!`);
+      await this.router.navigate(['/home'], { replaceUrl: true });
+      return true;
+
     } catch (error) {
       showAlertError('AuthService.login', error);
+      await this.router.navigate(['/login']);
       return false;
     }
   }
@@ -111,7 +120,7 @@ export class AuthService {
         await this.storage.remove(this.storageQrCodeKey);
       }
 
-      await this.router.navigate(['/login']);
+      await this.router.navigate(['/login'], { replaceUrl: true });
       return true;
     } catch (error) {
       showAlertError('AuthService.logout', error);
@@ -122,5 +131,4 @@ export class AuthService {
   getCurrentUserId(): string | null {
     return this.authUser.value ? this.authUser.value.userName : null;
   }
-  
 }

@@ -1,3 +1,4 @@
+// database.service.ts
 import { capSQLiteChanges, SQLiteDBConnection } from '@capacitor-community/sqlite';
 import { Injectable } from '@angular/core';
 import { SQLiteService } from './sqlite.service';
@@ -14,6 +15,20 @@ export class DatabaseService {
   private dataBaseName = 'DinosaurDataBase';
   private db!: SQLiteDBConnection;
   userList: BehaviorSubject<User[]> = new BehaviorSubject<User[]>([]);
+
+  adminUser = User.getNewUsuario(
+    'admin',
+    'admin@duocuc.cl',
+    'admin',
+    '¿Cuál es tu rol?',
+    'administrador',
+    'Admin',
+    'DuocUC',
+    EducationalLevel.findLevel(6)!,
+    new Date(2000, 0, 1),
+    'Santiago',
+    'default-image.jpg'
+  );
 
   testUser1 = User.getNewUsuario(
     'atorres', 
@@ -90,6 +105,9 @@ export class DatabaseService {
 
   private async createTestUsers() {
     try {
+      if (!(await this.readUser(this.adminUser.userName))) {
+        await this.saveUser(this.adminUser);
+      }
       if (!(await this.readUser(this.testUser1.userName))) {
         await this.saveUser(this.testUser1);
       }

@@ -1,3 +1,4 @@
+// login.page.ts
 import { Component, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -16,46 +17,35 @@ import { AuthService } from 'src/app/services/auth.service';
   styleUrls: ['./login.page.scss'],
   standalone: true,
   imports: [
-      CommonModule            // CGV-Permite usar directivas comunes de Angular
-    , FormsModule             // CGV-Permite usar formularios
-    , IonicModule             // CGV-Permite usar componentes de Ionic como IonContent, IonItem, etc.
-    , TranslateModule         // CGV-Permite usar pipe 'translate'
-    , LanguageComponent // CGV-Lista de idiomas
+    CommonModule,
+    FormsModule,
+    IonicModule,
+    TranslateModule,
+    LanguageComponent
   ]
 })
 export class LoginPage implements ViewWillEnter {
-
-  
-  /** 
-   * CGV-INI-Traducciones
-   * Para poder utilizar la traducción de textos, se debe:
-   *   1. Ejecutar: npm i @ngx-translate/core 
-   *   2. Ejecutar: npm i @ngx-translate/http-loader
-   *   3. Crear carpeta: src/app/assets/i18n
-   *   4. Crear archivo: src/app/assets/i18n/es.json para los textos en español
-   *   5. Crear archivo: src/app/assets/i18n/en.json para los textos en inglés
-   * 
-   * CGV-FIN-Traducciones
-  */ 
 
   @ViewChild('selectLanguage') selectLanguage!: LanguageComponent;
 
   correo: string;
   password: string;
-  showPassword: boolean = false; // Asegúrate de que esta línea esté presente
+  showPassword: boolean = false;
 
   constructor(
-      private router: Router
-    , private translate: TranslateService
-    , private authService: AuthService) 
-  { 
-    this.correo = 'atorres';
-    this.password = '1234';
-    // Los iconos deben ser agregados a uno (ver en https://ionic.io/ionicons)
+    private router: Router,
+    private translate: TranslateService,
+    private authService: AuthService
+  ) { 
+    this.correo = '';
+    this.password = '';
     addIcons({ colorWandOutline }); 
   }
 
   async ionViewWillEnter() {
+    // Limpiar credenciales al entrar
+    this.correo = '';
+    this.password = '';
     this.selectLanguage.setCurrentLanguage();
   }
 
@@ -63,29 +53,33 @@ export class LoginPage implements ViewWillEnter {
     this.router.navigate(['/theme']);
   }
 
-  login() {
-    this.authService.login(this.correo, this.password).then(
-      (result) => {
-        // Si el inicio de sesión es exitoso
-        this.router.navigate(['/home']);
-      },
-      (error) => {
-        // Maneja el error de inicio de sesión (puedes mostrar un mensaje)
-        console.error('Error de inicio de sesión:', error);
+  async login() {
+    if (!this.correo || !this.password) {
+      return;
+    }
+
+    try {
+      const result = await this.authService.login(this.correo, this.password);
+      if (result) {
+        // El AuthService ya maneja la navegación si el login es exitoso
+        return;
       }
-    );
+      // No necesitamos hacer nada más aquí, el AuthService ya muestra el mensaje
+    } catch (error) {
+      console.error('Error de inicio de sesión:', error);
+    }
   }
 
   registerNewUser() {
-    this.router.navigate(['/registrarme'])
+    this.router.navigate(['/registrarme']);
   }
 
   passwordRecovery() {
-    this.router.navigate(['/recuperar'])
+    this.router.navigate(['/recuperar']);
   }
 
-  goRute(){
-    this.router.navigate(['/map'])
+  goRute() {
+    this.router.navigate(['/map']);
   }
 
   togglePasswordVisibility() {

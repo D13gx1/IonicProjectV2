@@ -4,17 +4,17 @@
 
 <ion-content [fullscreen]="true">
   <app-qrwebscanner 
-    *ngIf="selectedComponent === 'qrwebscanner'" 
+    *ngIf="selectedComponent === 'qrwebscanner' && !isAdmin" 
     (scanned)="webQrScanned($event)"
     (stopped)="webQrStopped()">
   </app-qrwebscanner >
   
   <app-welcome 
-    *ngIf="selectedComponent === 'welcome'">
+    *ngIf="selectedComponent === 'welcome' && !isAdmin">
   </app-welcome>
 
   <app-dinosaur 
-    *ngIf="selectedComponent === 'mi-clase'">
+    *ngIf="selectedComponent === 'mi-clase' && !isAdmin">
   </app-dinosaur>
 
   <app-forum 
@@ -25,6 +25,9 @@
     *ngIf="selectedComponent === 'mis-datos'">
   </app-mis-datos>
 
+  <app-usuarios 
+    *ngIf="selectedComponent === 'usuarios' && isAdmin">
+  </app-usuarios>
 </ion-content>
 
 <app-footer

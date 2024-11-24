@@ -1,0 +1,62 @@
+<ion-content class="ion-padding">
+  <div class="admin-header">
+    <ion-icon name="shield-outline" class="admin-icon"></ion-icon>
+    <h1>Panel de Administración</h1>
+    <p>Gestión de Usuarios</p>
+  </div>
+
+  <div class="stats-container">
+    <div class="stat-card">
+      <ion-icon name="people-outline"></ion-icon>
+      <div class="stat-info">
+        <span class="stat-value">{{users.length}}</span>
+        <span class="stat-label">Usuarios Totales</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="users-container">
+    <ion-card *ngFor="let user of users" class="user-card" [class.admin-user]="user.userName === 'admin'">
+      <ion-card-content>
+        <div class="user-header">
+          <div class="user-title">
+            <h2>{{user.firstName}} {{user.lastName}}</h2>
+            <ion-badge color="primary" class="username-badge">
+              {{user.userName}}
+            </ion-badge>
+          </div>
+          <ion-button 
+            fill="clear" 
+            color="danger"
+            class="delete-button"
+            [disabled]="user.userName === 'admin'"
+            (click)="confirmDelete(user)">
+            <ion-icon name="trash-outline"></ion-icon>
+          </ion-button>
+        </div>
+
+        <div class="user-details">
+          <div class="detail-item">
+            <ion-icon name="mail-outline" color="primary"></ion-icon>
+            <span>{{user.email}}</span>
+          </div>
+          
+          <div class="detail-item">
+            <ion-icon name="school-outline" color="primary"></ion-icon>
+            <span>{{user.educationalLevel.name}}</span>
+          </div>
+          
+          <div class="detail-item">
+            <ion-icon name="calendar-outline" color="primary"></ion-icon>
+            <span>{{user.dateOfBirth | date:'dd/MM/yyyy'}}</span>
+          </div>
+          
+          <div class="detail-item">
+            <ion-icon name="map-outline" color="primary"></ion-icon>
+            <span>{{user.address}}</span>
+          </div>
+        </div>
+      </ion-card-content>
+    </ion-card>
+  </div>
+</ion-content>

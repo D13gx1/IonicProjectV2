@@ -14,6 +14,8 @@ import { ScannerService } from 'src/app/services/scanner.service';
 import { WelcomeComponent } from 'src/app/components/welcome/welcome.component';
 import { ForumComponent } from 'src/app/components/forum/forum.component';
 import { MisDatosComponent } from 'src/app/components/mis-datos/mis-datos.component';
+import { UsuariosComponent } from 'src/app/components/usuarios/usuarios.component';
+import { showToast } from 'src/app/tools/message-functions';
 
 @Component({
   selector: 'app-home',
@@ -24,20 +26,34 @@ import { MisDatosComponent } from 'src/app/components/mis-datos/mis-datos.compon
     CommonModule, FormsModule, TranslateModule, IonContent,
     HeaderComponent, FooterComponent,
     WelcomeComponent, QrWebScannerComponent, DinosaurComponent,
-    ForumComponent, MisDatosComponent
+    ForumComponent, MisDatosComponent, UsuariosComponent
   ]
 })
 export class HomePage {
   @ViewChild(FooterComponent) footer!: FooterComponent;
   selectedComponent = 'welcome';
+  isAdmin = false;
 
-  constructor(private auth: AuthService, private scanner: ScannerService) { }
+  constructor(private auth: AuthService, private scanner: ScannerService) {
+    this.auth.authUser.subscribe(user => {
+      this.isAdmin = user?.userName === 'admin';
+    });
+  }
 
   ionViewWillEnter() {
-    this.changeComponent('welcome');
+    // Verificar si es admin y establecer la vista inicial correspondiente
+    if (this.isAdmin) {
+      this.changeComponent('forum');
+    } else {
+      this.changeComponent('welcome');
+    }
   }
 
   async headerClick(button: string) {
+    if (this.isAdmin && !['forum', 'mis-datos', 'usuarios'].includes(button)) {
+      return; // Simplemente retornamos sin mostrar mensaje
+    }
+
     if (button === 'testqr')
       this.showDinoComponent(Dinosaur.jsonDinoExample);
 
@@ -53,25 +69,41 @@ export class HomePage {
   }
 
   webQrStopped() {
-    this.changeComponent('welcome');
+    if (this.isAdmin) {
+      this.changeComponent('forum');
+    } else {
+      this.changeComponent('welcome');
+    }
   }
 
   showDinoComponent(qr: string) {
     if (Dinosaur.isValidDinosaurQrCode(qr)) {
       this.auth.qrCodeData.next(qr);
-      // Cambiar directamente a mi-clase y actualizar el footer
-      this.selectedComponent = 'mi-clase';
-      this.footer.selectedButton = 'mi-clase';
+      if (!this.isAdmin) {
+        this.selectedComponent = 'mi-clase';
+        this.footer.selectedButton = 'mi-clase';
+      }
       return;
     }
-    this.changeComponent('welcome');
+    if (this.isAdmin) {
+      this.changeComponent('forum');
+    } else {
+      this.changeComponent('welcome');
+    }
   }
 
   footerClick(button: string) {
+    if (this.isAdmin && !['forum', 'mis-datos', 'usuarios'].includes(button)) {
+      return; // Simplemente retornamos sin mostrar mensaje
+    }
     this.selectedComponent = button;
   }
 
   changeComponent(name: string) {
+    if (this.isAdmin && !['forum', 'mis-datos', 'usuarios'].includes(name)) {
+      // En lugar de mostrar mensaje, redirigimos al foro
+      name = 'forum';
+    }
     this.selectedComponent = name;
     this.footer.selectedButton = name;
   }

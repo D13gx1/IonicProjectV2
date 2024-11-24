@@ -1,72 +1,163 @@
-<ion-header>
-  <ion-toolbar color="primary">
-    <ion-buttons slot="end">
-      <ion-button (click)="irALogin()">
-        <ion-icon name="arrow-back"></ion-icon>
+<ion-header class="ion-no-border">
+  <ion-toolbar color="primary" class="header-toolbar">
+    <ion-buttons slot="start">
+      <ion-button (click)="irALogin()" class="back-button">
+        <ion-icon name="arrow-back-outline"></ion-icon>
+        <span>Volver</span>
       </ion-button>
     </ion-buttons>
-    <ion-title>{{ 'Register' | translate }}</ion-title>
+    <ion-title class="ion-text-center">Registro de Usuario</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content class="content-background">
-  <form [formGroup]="userForm" (ngSubmit)="onSave()" class="form-container">
-    <ion-item class="form-item">
-      <ion-label position="stacked" class="label">{{ 'User' | translate }}</ion-label>
-      <ion-input formControlName="userName" class="input"></ion-input>
-    </ion-item>
-    <ion-item class="form-item">
-      <ion-label position="stacked" class="label">{{ 'Email' | translate }}</ion-label>
-      <ion-input formControlName="email" type="email" class="input"></ion-input>
-    </ion-item>
-    <ion-item class="form-item">
-      <ion-label position="stacked" class="label">{{ 'Password' | translate }}</ion-label>
-      <ion-input formControlName="password" type="password" class="input"></ion-input>
-    </ion-item>
-    <ion-item class="form-item">
-      <ion-label position="stacked" class="label">{{ 'SecretQuestion' | translate }}</ion-label>
-      <ion-input formControlName="secretQuestion" class="input"></ion-input>
-    </ion-item>
-    <ion-item class="form-item">
-      <ion-label position="stacked" class="label">{{ 'SecretAnswer' | translate }}</ion-label>
-      <ion-input formControlName="secretAnswer" type="password" class="input"></ion-input>
-    </ion-item>
-    <ion-item class="form-item">
-      <ion-label position="stacked" class="label">{{ 'FirstName' | translate }}</ion-label>
-      <ion-input formControlName="firstName" class="input"></ion-input>
-    </ion-item>
-    <ion-item class="form-item">
-      <ion-label position="stacked" class="label">{{ 'LastName' | translate }}</ion-label>
-      <ion-input formControlName="lastName" class="input"></ion-input>
-    </ion-item>
-    <ion-item class="form-item">
-      <ion-label position="stacked" class="label">{{ 'EducationalLevel' | translate }}</ion-label>
-      <ion-select formControlName="educationalLevel" class="select" interface="popover">
-        <ion-select-option *ngFor="let level of educationalLevels" [value]="level.id">
-          {{ level.name }}
-        </ion-select-option>
-      </ion-select>
-    </ion-item>
-    <ion-item class="form-item">
-      <ion-label position="stacked" class="label">{{ 'DateOfBirth' | translate }}</ion-label>
-      <ion-input
-        formControlName="dateOfBirth"
-        placeholder="dd/mm/yyyy"
-        maxlength="10"
-        (ionInput)="onDateInput($event)"
-        class="input">
-      </ion-input>
-    </ion-item>
-    <ion-item class="form-item">
-      <ion-label position="stacked" class="label">{{ 'Address' | translate }}</ion-label>
-      <ion-input formControlName="address" class="input"></ion-input>
-    </ion-item>
-    <ion-item class="form-item">
-      <ion-label position="stacked" class="label">{{ 'ProfileImage' | translate }}</ion-label>
-      <ion-input formControlName="image" placeholder="{{ 'EnterImageUrl' | translate }}" class="input"></ion-input>
-    </ion-item>
-    <ion-button expand="block" type="submit" [disabled]="!userForm.valid" class="submit-button" color="warning">
-      {{ 'Register' | translate }}
-    </ion-button>
-  </form> 
+<ion-content class="ion-padding custom-background">
+  <div class="register-container">
+    <!-- Tarjeta de registro -->
+    <ion-card class="register-card">
+      <!-- Encabezado con icono -->
+      <div class="card-header">
+        <div class="header-icon">
+          <ion-icon name="person-add-outline" class="register-icon"></ion-icon>
+        </div>
+        <h2>Crear Cuenta Nueva</h2>
+        <p class="subtitle">Complete el formulario para registrarse</p>
+      </div>
+
+      <ion-card-content>
+        <form [formGroup]="userForm" (ngSubmit)="onSave()" class="form-content">
+          <!-- Sección de Credenciales -->
+          <div class="section-title">
+            <ion-icon name="key-outline"></ion-icon>
+            <span>Credenciales de Acceso</span>
+          </div>
+
+          <div class="form-grid">
+            <ion-item class="custom-item">
+              <ion-label position="floating">Usuario</ion-label>
+              <ion-input formControlName="userName" class="custom-input"></ion-input>
+              <ion-note slot="error" *ngIf="userForm.get('userName')?.touched && userForm.get('userName')?.errors?.['required']">
+                El usuario es requerido
+              </ion-note>
+            </ion-item>
+
+            <ion-item class="custom-item">
+              <ion-label position="floating">Correo Electrónico</ion-label>
+              <ion-input formControlName="email" type="email" class="custom-input"></ion-input>
+              <ion-note slot="error" *ngIf="userForm.get('email')?.touched && userForm.get('email')?.errors?.['required']">
+                El correo es requerido
+              </ion-note>
+              <ion-note slot="error" *ngIf="userForm.get('email')?.touched && userForm.get('email')?.errors?.['email']">
+                Ingrese un correo válido
+              </ion-note>
+            </ion-item>
+
+            <ion-item class="custom-item full-width">
+              <ion-label position="floating">Contraseña</ion-label>
+              <ion-input formControlName="password" type="password" class="custom-input"></ion-input>
+              <ion-note slot="error" *ngIf="userForm.get('password')?.touched && userForm.get('password')?.errors?.['required']">
+                La contraseña es requerida
+              </ion-note>
+            </ion-item>
+          </div>
+
+          <!-- Sección de Seguridad -->
+          <div class="section-title">
+            <ion-icon name="shield-outline"></ion-icon>
+            <span>Seguridad</span>
+          </div>
+
+          <div class="form-grid">
+            <ion-item class="custom-item">
+              <ion-label position="floating">Pregunta Secreta</ion-label>
+              <ion-input formControlName="secretQuestion" class="custom-input"></ion-input>
+              <ion-note slot="error" *ngIf="userForm.get('secretQuestion')?.touched && userForm.get('secretQuestion')?.errors?.['required']">
+                La pregunta secreta es requerida
+              </ion-note>
+            </ion-item>
+
+            <ion-item class="custom-item">
+              <ion-label position="floating">Respuesta Secreta</ion-label>
+              <ion-input formControlName="secretAnswer" type="password" class="custom-input"></ion-input>
+              <ion-note slot="error" *ngIf="userForm.get('secretAnswer')?.touched && userForm.get('secretAnswer')?.errors?.['required']">
+                La respuesta secreta es requerida
+              </ion-note>
+            </ion-item>
+          </div>
+
+          <!-- Sección de Datos Personales -->
+          <div class="section-title">
+            <ion-icon name="person-outline"></ion-icon>
+            <span>Datos Personales</span>
+          </div>
+
+          <div class="form-grid">
+            <ion-item class="custom-item">
+              <ion-label position="floating">Nombre</ion-label>
+              <ion-input formControlName="firstName" class="custom-input"></ion-input>
+              <ion-note slot="error" *ngIf="userForm.get('firstName')?.touched && userForm.get('firstName')?.errors?.['required']">
+                El nombre es requerido
+              </ion-note>
+            </ion-item>
+
+            <ion-item class="custom-item">
+              <ion-label position="floating">Apellido</ion-label>
+              <ion-input formControlName="lastName" class="custom-input"></ion-input>
+              <ion-note slot="error" *ngIf="userForm.get('lastName')?.touched && userForm.get('lastName')?.errors?.['required']">
+                El apellido es requerido
+              </ion-note>
+            </ion-item>
+
+            <ion-item class="custom-item">
+              <ion-label position="floating">Nivel Educacional</ion-label>
+              <ion-select formControlName="educationalLevel" interface="popover" class="custom-select">
+                <ion-select-option *ngFor="let level of educationalLevels" [value]="level.id">
+                  {{ level.name }}
+                </ion-select-option>
+              </ion-select>
+              <ion-note slot="error" *ngIf="userForm.get('educationalLevel')?.touched && userForm.get('educationalLevel')?.errors?.['required']">
+                El nivel educacional es requerido
+              </ion-note>
+            </ion-item>
+
+            <ion-item class="custom-item">
+              <ion-label position="floating">Fecha de Nacimiento</ion-label>
+              <ion-input
+                formControlName="dateOfBirth"
+                placeholder="dd/mm/aaaa"
+                maxlength="10"
+                (ionInput)="onDateInput($event)"
+                class="custom-input">
+              </ion-input>
+              <ion-note slot="error" *ngIf="userForm.get('dateOfBirth')?.touched && userForm.get('dateOfBirth')?.errors?.['required']">
+                La fecha de nacimiento es requerida
+              </ion-note>
+            </ion-item>
+
+            <ion-item class="custom-item full-width">
+              <ion-label position="floating">Dirección</ion-label>
+              <ion-input formControlName="address" class="custom-input"></ion-input>
+              <ion-note slot="error" *ngIf="userForm.get('address')?.touched && userForm.get('address')?.errors?.['required']">
+                La dirección es requerida
+              </ion-note>
+            </ion-item>
+
+            <ion-item class="custom-item full-width">
+              <ion-label position="floating">URL de Imagen de Perfil (Opcional)</ion-label>
+              <ion-input formControlName="image" placeholder="https://..." class="custom-input"></ion-input>
+            </ion-item>
+          </div>
+
+          <!-- Botón de registro -->
+          <ion-button 
+            expand="block" 
+            type="submit" 
+            class="register-button" 
+            [disabled]="!userForm.valid">
+            <ion-icon name="person-add-outline" slot="start"></ion-icon>
+            Crear Cuenta
+          </ion-button>
+        </form>
+      </ion-card-content>
+    </ion-card>
+  </div>
 </ion-content>

@@ -3,20 +3,49 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { DatabaseService } from 'src/app/services/database.service';
 import { User } from 'src/app/model/user';
 import { EducationalLevel } from 'src/app/model/educational-level';
-import { IonContent, IonItem, IonLabel, IonInput, IonButton, IonSelect, IonSelectOption, IonIcon, IonButtons, IonToolbar, IonHeader, IonTitle } from "@ionic/angular/standalone";
+import { 
+  IonContent, 
+  IonItem, 
+  IonLabel, 
+  IonInput, 
+  IonButton, 
+  IonSelect, 
+  IonSelectOption, 
+  IonIcon, 
+  IonButtons, 
+  IonToolbar, 
+  IonHeader, 
+  IonTitle,
+  IonCard,
+  IonCardContent,
+  IonNote
+} from "@ionic/angular/standalone";
 import { CommonModule } from '@angular/common';
 import { convertStringToDate } from 'src/app/tools/date-functions';
 import { showToast } from 'src/app/tools/message-functions';
 import { AuthService } from 'src/app/services/auth.service';
 import { TranslateModule } from '@ngx-translate/core';
 import { Router } from '@angular/router';
+import { addIcons } from 'ionicons';
+import { 
+  personAddOutline, 
+  arrowBackOutline, 
+  keyOutline, 
+  shieldOutline, 
+  personOutline 
+} from 'ionicons/icons';
 
 @Component({
   selector: 'app-registrarme',
   templateUrl: './registrarme.page.html',
   styleUrls: ['./registrarme.page.scss'],
   standalone: true,
-  imports: [IonTitle, IonHeader, IonToolbar, IonButtons, IonIcon, 
+  imports: [
+    IonTitle,
+    IonHeader,
+    IonToolbar,
+    IonButtons,
+    IonIcon,
     CommonModule,
     IonContent,
     IonItem,
@@ -25,6 +54,9 @@ import { Router } from '@angular/router';
     IonButton,
     IonSelect,
     IonSelectOption,
+    IonCard,
+    IonCardContent,
+    IonNote,
     ReactiveFormsModule,
     TranslateModule
   ]
@@ -34,11 +66,19 @@ export class RegistrarmePage {
   educationalLevels: EducationalLevel[] = EducationalLevel.getLevels();
 
   constructor(
-    private fb: FormBuilder, 
+    private fb: FormBuilder,
     private databaseService: DatabaseService,
     private authService: AuthService,
     private router: Router
-  ){
+  ) {
+    addIcons({ 
+      personAddOutline, 
+      arrowBackOutline, 
+      keyOutline, 
+      shieldOutline, 
+      personOutline 
+    });
+
     this.userForm = this.fb.group({
       userName: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
@@ -50,7 +90,7 @@ export class RegistrarmePage {
       educationalLevel: ['', Validators.required],
       dateOfBirth: ['', [Validators.required, Validators.pattern(/^\d{2}\/\d{2}\/\d{4}$/)]],
       address: ['', Validators.required],
-      image: ['', Validators.required]
+      image: [''] // Opcional
     });
   }
 
@@ -79,17 +119,14 @@ export class RegistrarmePage {
           return;
         }
 
-        // Convertir fecha
         const dateOfBirth = convertStringToDate(formValues.dateOfBirth);
         
-        // Obtener objeto EducationalLevel
         const educationalLevel = EducationalLevel.findLevel(formValues.educationalLevel);
         if (!educationalLevel) {
           showToast('Error: Nivel educacional inválido');
           return;
         }
 
-        // Crear nuevo usuario
         const newUser = User.getNewUsuario(
           formValues.userName,
           formValues.email,
@@ -101,15 +138,13 @@ export class RegistrarmePage {
           educationalLevel,
           dateOfBirth,
           formValues.address,
-          formValues.image
+          formValues.image || 'assets/default-profile.png'
         );
 
-        // Guardar en base de datos
         await this.databaseService.saveUser(newUser);
         
-        // Realizar login automático
         const loginSuccess = await this.authService.login(
-          formValues.userName,  // Usando userName en lugar de email
+          formValues.userName,
           formValues.password
         );
 
@@ -130,6 +165,6 @@ export class RegistrarmePage {
   }
 
   irALogin() {
-    this.router.navigate(['/login']); // Reemplaza '/login' con la ruta correcta
+    this.router.navigate(['/login']);
   }
 }

@@ -1,0 +1,171 @@
+:host {
+  --duoc-blue: #002F87;
+  --duoc-yellow: #FFB800;
+  --duoc-light-blue: #E8F0FE;
+}
+
+.admin-header {
+  text-align: center;
+  padding: 20px;
+  background: var(--duoc-blue);
+  border-radius: 16px;
+  margin-bottom: 24px;
+  color: white;
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(45deg, var(--duoc-yellow) 0%, transparent 100%);
+    opacity: 0.1;
+  }
+
+  .admin-icon {
+    font-size: 48px;
+    margin-bottom: 12px;
+  }
+
+  h1 {
+    font-size: 24px;
+    font-weight: 600;
+    margin: 0 0 8px;
+  }
+
+  p {
+    margin: 0;
+    opacity: 0.9;
+  }
+}
+
+.stats-container {
+  margin-bottom: 24px;
+  
+  .stat-card {
+    background: var(--duoc-yellow);
+    padding: 16px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    color: var(--duoc-blue);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+
+    ion-icon {
+      font-size: 32px;
+    }
+
+    .stat-info {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .stat-value {
+      font-size: 24px;
+      font-weight: 700;
+    }
+
+    .stat-label {
+      font-size: 14px;
+      opacity: 0.9;
+    }
+  }
+}
+
+.users-container {
+  display: grid;
+  gap: 16px;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+}
+
+.user-card {
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  transition: transform 0.3s ease;
+
+  &:hover {
+    transform: translateY(-2px);
+  }
+
+  &.admin-user {
+    border: 2px solid var(--duoc-yellow);
+    
+    .user-title h2::after {
+      content: '👑';
+      margin-left: 8px;
+    }
+  }
+
+  .user-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 16px;
+
+    .user-title {
+      flex: 1;
+      
+      h2 {
+        margin: 0 0 4px;
+        font-size: 18px;
+        font-weight: 600;
+        color: var(--duoc-blue);
+      }
+
+      .username-badge {
+        --background: var(--duoc-yellow);
+        --color: var(--duoc-blue);
+        font-weight: 500;
+      }
+    }
+
+    .delete-button {
+      font-size: 20px;
+      margin: 0;
+      opacity: 0.7;
+      transition: opacity 0.3s ease;
+
+      &:hover:not([disabled]) {
+        opacity: 1;
+      }
+
+      &[disabled] {
+        opacity: 0.3;
+      }
+    }
+  }
+
+  .user-details {
+    display: grid;
+    gap: 12px;
+    
+    .detail-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 14px;
+      color: #666;
+
+      ion-icon {
+        font-size: 16px;
+        min-width: 16px;
+      }
+
+      span {
+        line-height: 1.4;
+      }
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .users-container {
+    grid-template-columns: 1fr;
+  }
+}
