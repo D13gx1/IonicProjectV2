@@ -27,13 +27,13 @@
       <h4 class="glow-text">{{ 'Login.Title.Login' | translate }}</h4>
   
       <ion-item class="margin-bottom-6">
-        <ion-input label="{{ 'Login.Label.Email' | translate }}" labelPlacement="floating" [(ngModel)]="correo"
+        <ion-input id="correo" label="{{ 'Login.Label.Email' | translate }}" labelPlacement="floating" [(ngModel)]="correo"
           placeholder="{{ 'Login.Placeholder.Email' | translate }}">
         </ion-input>
       </ion-item>
   
       <ion-item class="margin-bottom-6">
-        <ion-input label="{{ 'Login.Label.Password' | translate }}" labelPlacement="floating" [(ngModel)]="password"
+        <ion-input id="password" label="{{ 'Login.Label.Password' | translate }}" labelPlacement="floating" [(ngModel)]="password"
           placeholder="{{ 'Login.Placeholder.Password' | translate }}" [type]="showPassword ? 'text' : 'password'">
         </ion-input>
         <ion-icon slot="end" [name]="showPassword ? 'eye-off-outline' : 'eye-outline'"

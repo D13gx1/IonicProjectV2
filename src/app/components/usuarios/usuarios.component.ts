@@ -18,17 +18,11 @@ import { trashOutline, peopleOutline, mailOutline, schoolOutline, calendarOutlin
     CommonModule,
     TranslateModule,
     IonContent,
-    IonList,
-    IonItem,
-    IonLabel,
     IonButton,
     IonIcon,
     IonCard,
-    IonCardHeader,
-    IonCardTitle,
     IonCardContent,
     IonBadge,
-    IonAvatar
   ]
 })
 export class UsuariosComponent implements OnInit {
