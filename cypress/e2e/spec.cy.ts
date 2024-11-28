@@ -1,4 +1,4 @@
-
+////////////////////////////////////////////////////
 //Login con credenciales incorrectas
 describe('Login con credenciales incorrectas', () => {
   beforeEach(() => {
@@ -135,6 +135,7 @@ it('Avanza al paso 2 con un correo válido', () => {
   .should('be.visible') // Verifica que el botón sea visible
   .click();
   // Verifica que no se muestran errores (puedes agregar más validaciones según la lógica)
+  
 });
 });
 
@@ -144,7 +145,9 @@ it('Avanza al paso 2 con un correo válido', () => {
 describe('Cambio de nombre desde /mis-datos', () => {
   beforeEach(() => {
     // Navegar a la página de login y autenticarse
+    
     cy.visit('/login');
+    cy.get('#navbar-logout-button')
     cy.get('ion-input#correo input').type('atorres'); // Usar correo válido
     cy.get('ion-input#password input').type('1234'); // Contraseña válida
     cy.get('.enter-button').click(); // Iniciar sesión
@@ -169,6 +172,78 @@ describe('Cambio de nombre desde /mis-datos', () => {
 
   });
 }); 
+
+////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////
+
+describe('Formulario de Registro de Usuario', () => {
+  beforeEach(() => {
+    // Navegar a la página de registro
+    cy.visit('/registrarme');
+  });
+
+  it('debe llenar el formulario de registro correctamente', () => {
+    // Llenar el campo Usuario
+    cy.get('#username')
+      .type('usuarioPrueba');
+    
+    // Llenar el campo Correo Electrónico
+    cy.get('#email')
+      .type('usuario@prueba.com');
+    
+    // Llenar el campo Contraseña
+    cy.get('#password')
+      .type('contraseñaSegura123');
+    
+    // Llenar el campo Pregunta Secreta
+    cy.get('#secret-question')
+      .type('¿Cuál es el nombre de tu primer mascota?');
+    
+    // Llenar el campo Respuesta Secreta
+    cy.get('#secret-answer')
+      .type('Rex');
+    
+    // Llenar el campo Nombre
+    cy.get('#first-name')
+      .type('Juan');
+    
+    // Llenar el campo Apellido
+    cy.get('#last-name')
+      .type('Pérez');
+    
+    // Seleccionar el Nivel Educacional (interactuar con el ion-select)
+    cy.get('#educational-level') // Localizamos el ion-select
+      .click(); // Hacemos clic en el select para abrir el popover
+
+    // Esperar a que el popover esté visible
+    cy.get('ion-select-popover')
+      .should('be.visible') // Verificamos que el popover se haya abierto
+      .find('ion-item')
+      .contains('Básica Incompleta') // Buscamos la opción
+      .click(); // Seleccionamos la opción
+
+    // Esperamos a que el popover desaparezca antes de continuar
+    cy.get('ion-select-popover').should('not.exist');
+
+    // Llenar el campo Fecha de Nacimiento
+    cy.get('#date-of-birth')
+      .type('15/08/1990');
+    
+    // Llenar el campo Dirección
+    cy.get('#address')
+      .type('Calle Falsa 123');
+    
+    // Llenar el campo URL de Imagen de Perfil (Opcional)
+    cy.get('#profile-image')
+      .type('https://www.ejemplo.com/imagen.jpg');
+    
+    // Hacer clic en el botón de registro
+    cy.get('#register-button')
+      .click();
+
+
+  });
+});
 
 
 
