@@ -2,42 +2,42 @@
   <form [formGroup]="userForm" (ngSubmit)="onSave()" class="form-container">
     <ion-item class="form-item">
       <ion-label position="stacked" class="label">{{ 'User' | translate }}</ion-label>
-      <ion-input formControlName="userName" class="input"></ion-input>
+      <ion-input id="user-name" formControlName="userName" class="input"></ion-input>
     </ion-item>
 
     <ion-item class="form-item">
       <ion-label position="stacked" class="label">{{ 'Email' | translate }}</ion-label>
-      <ion-input formControlName="email" type="email" class="input"></ion-input>
+      <ion-input id="email" formControlName="email" type="email" class="input"></ion-input>
     </ion-item>
 
     <ion-item class="form-item">
       <ion-label position="stacked" class="label">{{ 'Password' | translate }}</ion-label>
-      <ion-input formControlName="password" type="password" class="input"></ion-input>
+      <ion-input id="password" formControlName="password" type="password" class="input"></ion-input>
     </ion-item>
 
     <ion-item class="form-item">
       <ion-label position="stacked" class="label">{{ 'SecretQuestion' | translate }}</ion-label>
-      <ion-input formControlName="secretQuestion" class="input"></ion-input>
+      <ion-input id="secret-question" formControlName="secretQuestion" class="input"></ion-input>
     </ion-item>
 
     <ion-item class="form-item">
       <ion-label position="stacked" class="label">{{ 'SecretAnswer' | translate }}</ion-label>
-      <ion-input formControlName="secretAnswer" type="password" class="input"></ion-input>
+      <ion-input id="secret-answer" formControlName="secretAnswer" type="password" class="input"></ion-input>
     </ion-item>
 
     <ion-item class="form-item">
       <ion-label position="stacked" class="label">{{ 'FirstName' | translate }}</ion-label>
-      <ion-input formControlName="firstName" class="input"></ion-input>
+      <ion-input id="first-name" formControlName="firstName" class="input"></ion-input>
     </ion-item>
 
     <ion-item class="form-item">
       <ion-label position="stacked" class="label">{{ 'LastName' | translate }}</ion-label>
-      <ion-input formControlName="lastName" class="input"></ion-input>
+      <ion-input id="last-name" formControlName="lastName" class="input"></ion-input>
     </ion-item>
 
     <ion-item class="form-item">
       <ion-label position="stacked" class="label">{{ 'EducationalLevel' | translate }}</ion-label>
-      <ion-select formControlName="educationalLevel" class="select" interface="popover">
+      <ion-select id="educational-level" formControlName="educationalLevel" class="select" interface="popover">
         <ion-select-option *ngFor="let level of educationalLevels" [value]="level.id">
           {{ level.name }}
         </ion-select-option>
@@ -47,6 +47,7 @@
     <ion-item class="form-item">
       <ion-label position="stacked" class="label">{{ 'DateOfBirth' | translate }}</ion-label>
       <ion-input 
+        id="date-of-birth" 
         formControlName="dateOfBirth" 
         placeholder="dd/mm/yyyy"
         maxlength="10"
@@ -57,15 +58,15 @@
 
     <ion-item class="form-item">
       <ion-label position="stacked" class="label">{{ 'Address' | translate }}</ion-label>
-      <ion-input formControlName="address" class="input"></ion-input>
+      <ion-input id="address" formControlName="address" class="input"></ion-input>
     </ion-item>
 
     <ion-item class="form-item">
       <ion-label position="stacked" class="label">{{ 'ProfileImage' | translate }}</ion-label>
-      <ion-input formControlName="image" placeholder="{{ 'EnterImageUrl' | translate }}" class="input"></ion-input>
+      <ion-input id="profile-image" formControlName="image" placeholder="{{ 'EnterImageUrl' | translate }}" class="input"></ion-input>
     </ion-item>
 
-    <ion-button expand="block" type="submit" [disabled]="!userForm.valid" class="submit-button" color="warning">
+    <ion-button id="save-button" expand="block" type="submit" [disabled]="!userForm.valid" class="submit-button" color="warning">
       {{ 'SaveChanges' | translate }}
     </ion-button>
   </form>

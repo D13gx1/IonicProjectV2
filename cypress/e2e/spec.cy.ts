@@ -26,6 +26,9 @@ describe('Login con credenciales incorrectas', () => {
   });
 });
 
+////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////
+
   //Login con credenciales correctas
 describe('Login con credenciales correctas', () => {
   beforeEach(() => {
@@ -55,7 +58,8 @@ describe('Login con credenciales correctas', () => {
 });
 
 
-
+////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////
 
 describe('Recuperación de contraseña con datos incorretos', () => {
   beforeEach(() => {
@@ -106,10 +110,8 @@ describe('Recuperación de contraseña con datos incorretos', () => {
   });
 });
 
-
-
-
-
+////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////
 
 describe('Recuperacion de contraseña con datos validos', () => {
   beforeEach(() => {
@@ -135,6 +137,45 @@ it('Avanza al paso 2 con un correo válido', () => {
   // Verifica que no se muestran errores (puedes agregar más validaciones según la lógica)
 });
 });
+
+////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////
+
+describe('Cambio de nombre desde /mis-datos', () => {
+  beforeEach(() => {
+    // Navegar a la página de login y autenticarse
+    cy.visit('/login');
+    cy.get('ion-input#correo input').type('atorres'); // Usar correo válido
+    cy.get('ion-input#password input').type('1234'); // Contraseña válida
+    cy.get('.enter-button').click(); // Iniciar sesión
+
+    // Navegar a la página /mis-datos desde el footer
+    cy.get('#footer-mis-datos') // Seleccionar el botón del footer
+      .click(); // Hacer clic para ir a /mis-datos
+  });
+
+  it('Debe permitir cambiar el nombre a Samuel', () => {
+    const nuevoNombre = 'Samuel';
+
+    // Localizar el campo de nombre y cambiarlo
+    cy.get('ion-input#first-name input')
+      .clear() // Limpiar el campo actual
+      .type(nuevoNombre) // Escribir el nuevo nombre
+      .should('have.value', nuevoNombre); // Verificar que el valor sea correcto
+
+    // Guardar los cambios
+    cy.get('#save-button') // Botón de guardar
+      .click(); // Hacer clic en el botón de guardar
+
+  });
+}); 
+
+
+
+
+
+
+  
 
 
 
