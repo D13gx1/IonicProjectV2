@@ -24,9 +24,9 @@
     </ion-card-header>
     <ion-card-content>
       <ion-item>
-        <ion-input type="email" [(ngModel)]="email" placeholder="{{ 'EnterYourEmail' | translate }}" required></ion-input>
+        <ion-input id="email" type="email" [(ngModel)]="email" placeholder="{{ 'EnterYourEmail' | translate }}" required></ion-input>
       </ion-item>
-      <ion-button expand="full" (click)="verificarCorreo()">{{ 'VerifyEmail' | translate }}</ion-button>
+      <ion-button class="enter-button normal-text" expand="full" (click)="verificarCorreo()">{{ 'VerifyEmail' | translate }}</ion-button>
     </ion-card-content>
   </ion-card>
 
@@ -37,9 +37,9 @@
     <ion-card-content>
       <p>{{ secretQuestion }}</p>
       <ion-item>
-        <ion-input type="text" [(ngModel)]="answer" placeholder="{{ 'Answer' | translate }}" required></ion-input>
+        <ion-input id="password" type="text" [(ngModel)]="answer" placeholder="{{ 'Answer' | translate }}" required></ion-input>
       </ion-item>
-      <ion-button expand="full" (click)="verificarRespuesta()">{{ 'VerifyAnswer' | translate }}</ion-button>
+      <ion-button class="enter-button-password normal-text" expand="full" (click)="verificarRespuesta()">{{ 'VerifyAnswer' | translate }}</ion-button>
     </ion-card-content>
   </ion-card>
 </ion-content>

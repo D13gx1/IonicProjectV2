@@ -1,3 +1,5 @@
+
+//Login con credenciales incorrectas
 describe('Login con credenciales incorrectas', () => {
   beforeEach(() => {
     // Visitar la página de login
@@ -23,3 +25,122 @@ describe('Login con credenciales incorrectas', () => {
     cy.contains('Iniciar sesión');
   });
 });
+
+  //Login con credenciales correctas
+describe('Login con credenciales correctas', () => {
+  beforeEach(() => {
+    // Visitar la página de login
+    cy.visit('/login'); // Ajusta la ruta según sea necesario
+  });
+
+  it('Debe iniciar sesión correctamente con credenciales válidas', () => {
+    // Ingresar un nombre de usuario válido
+    cy.get('ion-input#correo input')
+      .type('atorres')
+      .should('have.value', 'atorres'); // Verifica que se ingresó correctamente
+
+    // Ingresar la contraseña correcta
+    cy.get('ion-input#password input')
+      .type('1234')
+      .should('have.value', '1234'); // Verifica que se ingresó correctamente
+
+    // Hacer clic en el botón de login usando la clase del botón
+    cy.get('.enter-button') // Usamos la clase 'enter-button' del botón
+      .should('be.visible') // Verifica que el botón sea visible
+      .click();
+
+    // Verificar la navegación al home o que se muestra el mensaje de bienvenida
+    cy.url().should('include', '/home'); // Asegura que redirige a /home
+  });
+});
+
+
+
+
+describe('Recuperación de contraseña con datos incorretos', () => {
+  beforeEach(() => {
+    cy.visit('/recuperar'); // Navega a la página de recuperación de contraseña
+  });
+
+  it('Redirige a la página de /incorrecto al verificar un correo inválido', () => {
+    // Introduce un correo inválido
+    cy.get('ion-input#email input')
+      .type('correo_invalido@ejemplo.com');
+
+    // Haz clic en el botón de verificar correo
+    cy.get('.enter-button') // Usamos la clase 'enter-button' del botón
+      .should('be.visible') // Verifica que el botón sea visible
+      .click();
+
+    // Verifica que la URL sea /incorrecto
+    cy.url().should('include', '/incorrecto');
+
+    // Opcional: verifica el contenido de la página /incorrecto
+    cy.contains('Los datos esperados ').should('be.visible');
+  });
+
+  it('Redirige a la página de /incorrecto al verificar una respuesta invalida', () => {
+    // Introduce un correo válido
+    cy.get('ion-input#email input')
+      .type('atorres@duocuc.cl');
+
+    // Haz clic en el botón de verificar correo
+    cy.get('.enter-button')
+      .should('be.visible')
+      .click();
+
+    // Introduce una respuesta incorrecta
+    cy.get('ion-input#password input').type('perro');
+
+    // Haz clic en el botón de verificar respuesta
+    cy.get('ion-button') // Cambiar al selector del botón de la respuesta
+    
+    cy.get('.enter-button-password') // Usamos la clase 'enter-button' del botón
+    .should('be.visible') // Verifica que el botón sea visible
+    .click();
+
+    // Verifica que la URL sea /incorrecto tras una respuesta incorrecta
+    cy.url().should('include', '/incorrecto');
+
+   
+  });
+});
+
+
+
+
+
+
+describe('Recuperacion de contraseña con datos validos', () => {
+  beforeEach(() => {
+    cy.visit('/recuperar'); // Navega a la página de recuperación de contraseña
+  });
+
+it('Avanza al paso 2 con un correo válido', () => {
+  // Introduce un correo válido
+  cy.get('ion-input#email input')
+    .type('atorres@duocuc.cl');
+
+  // Haz clic en el botón de verificar correo
+  cy.get('.enter-button') // Usamos la clase 'enter-button' del botón
+  .should('be.visible') // Verifica que el botón sea visible
+  .click();
+  // Introduce una respuesta correcta
+  cy.get('ion-input#password input').type('gato');
+
+  // Haz clic en el botón para verificar la respuesta
+  cy.get('.enter-button-password') // Usamos la clase 'enter-button' del botón
+  .should('be.visible') // Verifica que el botón sea visible
+  .click();
+  // Verifica que no se muestran errores (puedes agregar más validaciones según la lógica)
+});
+});
+
+
+
+
+
+
+
+
+
