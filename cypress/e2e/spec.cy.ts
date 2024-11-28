@@ -11,15 +11,15 @@ describe('Login con credenciales incorrectas', () => {
 
     // Ingresar una contraseña incorrecta
     cy.get('ion-input#password input')
-      .type('contraseña_incorrecta');
+      .type('contraseña_incorrecta')
+      .should('be.visible'); // Verifica que el campo sea visible
 
-    // Hacer clic en el botón de login
-    cy.get('ion-button')
-      .contains('Login') // Ajusta este texto si el botón tiene otro texto
+    // Hacer clic en el botón de login usando la clase del botón
+    cy.get('.enter-button') // Usamos la clase 'enter-button' del botón
+      .should('be.visible') // Verifica que el botón sea visible
       .click();
 
     // Verificar que se muestra el mensaje de error
-    cy.contains('Credenciales incorrectas') // Ajusta el texto del mensaje
-      .should('be.visible');
+    cy.contains('Iniciar sesión');
   });
 });

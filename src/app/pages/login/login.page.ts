@@ -1,4 +1,3 @@
-// login.page.ts
 import { Component, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -10,6 +9,7 @@ import { Router } from '@angular/router';
 import { colorWandOutline } from 'ionicons/icons';
 import { addIcons } from 'ionicons';
 import { AuthService } from 'src/app/services/auth.service';
+import { showAlertError } from 'src/app/tools/message-functions'; // Asegúrate de importar esto para los mensajes de error
 
 @Component({
   selector: 'app-login',
@@ -55,19 +55,11 @@ export class LoginPage implements ViewWillEnter {
 
   async login() {
     if (!this.correo || !this.password) {
+      showAlertError('login.page.ts', 'Por favor, ingresa un correo y una contraseña válidos.');
       return;
     }
-
-    try {
-      const result = await this.authService.login(this.correo, this.password);
-      if (result) {
-        // El AuthService ya maneja la navegación si el login es exitoso
-        return;
-      }
-      // No necesitamos hacer nada más aquí, el AuthService ya muestra el mensaje
-    } catch (error) {
-      console.error('Error de inicio de sesión:', error);
-    }
+    await this.authService.login(this.correo, this.password);
+      
   }
 
   registerNewUser() {

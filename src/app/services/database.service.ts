@@ -162,7 +162,7 @@ export class DatabaseService {
     try {
       const q = 'SELECT * FROM USER;';
       const rows = (await this.db.query(q)).values;
-      const users = rows ? rows.map((row: any) => this.rowToUser(row)) : [];
+      const users = rows?.length ? rows.map((row: any) => this.rowToUser(row)) : [];
       this.userList.next(users);
       return users;
     } catch (error) {
@@ -198,7 +198,7 @@ export class DatabaseService {
     try {
       const q = 'SELECT * FROM USER WHERE userName=? AND password=?;';
       const rows = (await this.db.query(q, [userName, password])).values;
-      return rows ? this.rowToUser(rows[0]) : undefined;
+      return rows?.length ? this.rowToUser(rows[0]) : undefined;
     } catch (error) {
       showAlertError('DataBaseService.findUser', error);
       return undefined;

@@ -102,6 +102,7 @@ export class AuthService {
       return true;
 
     } catch (error) {
+      // En caso de cualquier error en la autenticación
       showAlertError('AuthService.login', error);
       await this.router.navigate(['/login']);
       return false;
