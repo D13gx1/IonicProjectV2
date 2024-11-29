@@ -144,10 +144,9 @@ it('Avanza al paso 2 con un correo válido', () => {
 
 describe('Cambio de nombre desde /mis-datos', () => {
   beforeEach(() => {
-    // Navegar a la página de login y autenticarse
+    // Navegar a la página d  e login y autenticarse
     
     cy.visit('/login');
-    cy.get('#navbar-logout-button')
     cy.get('ion-input#correo input').type('atorres'); // Usar correo válido
     cy.get('ion-input#password input').type('1234'); // Contraseña válida
     cy.get('.enter-button').click(); // Iniciar sesión
