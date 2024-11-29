@@ -48,19 +48,22 @@
       </div>
     </ion-card-content>
   </ion-card>
-  
+
+  <!-- Botones adicionales (antes del footer) -->
+  <div class="ion-margin-top">
+    <ion-button color="primary" expand="block" (click)="goRute()">
+      {{ 'Login.Button.rute' | translate }}
+    </ion-button>
+
+    <ion-button color="secondary" expand="block" (click)="registerNewUser()">
+      {{ 'Login.Button.Register' | translate }}
+    </ion-button>
+
+    <ion-button color="secondary" expand="block" (click)="passwordRecovery()">
+      {{ 'Login.Button.ForgotPassword' | translate }}
+    </ion-button>
+  </div>
+
 </ion-content>
 
-<ion-footer>
-  <ion-button color="primary" expand="block" (click)="goRute()">
-    {{ 'Login.Button.rute' | translate }}
-  </ion-button>
-
-  <ion-button color="secondary" expand="block" (click)="registerNewUser()">
-    {{ 'Login.Button.Register' | translate }}
-  </ion-button>
-
-  <ion-button color="secondary" expand="block" (click)="passwordRecovery()">
-    {{ 'Login.Button.ForgotPassword' | translate }}
-  </ion-button>
-</ion-footer>
+<!-- Footer vacío o para otros propósitos -->

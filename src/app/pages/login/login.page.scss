@@ -1,51 +1,69 @@
 .login-container {
-    position: relative;          /* Posicionamiento relativo */
-    width: 90%;                 /* Ancho del card */
-    max-width: 250px;          /* Ancho máximo del card, ajustable según necesidad */
-    border: 2px solid gray;     /* Borde gris */
-    --background: transparent;   /* Fondo transparente */
-    margin: 20px auto;          /* Margen superior/inferior de 20px y centrado horizontal */
-    padding: 10px;              /* Espaciado interno */
+    position: relative;
+    /* Posicionamiento relativo */
+    width: 90%;
+    /* Ancho del card */
+    max-width: 250px;
+    /* Ancho máximo del card, ajustable según necesidad */
+    border: 2px solid gray;
+    /* Borde gris */
+    --background: transparent;
+    /* Fondo transparente */
+    margin: 20px auto;
+    /* Margen superior/inferior de 20px y centrado horizontal */
+    padding: 10px;
+    /* Espaciado interno */
 }
 
 
 /* Estilo para el título */
 .glow-text {
-    font-size: 1.5em; /* Ajustar el tamaño de fuente según sea necesario */
-    color: #000000; /* Color del texto */
-    text-align: center; /* Centra el texto */
-    margin-top: 10px; /* Espaciado superior */
+    font-size: 1.5em;
+    /* Ajustar el tamaño de fuente según sea necesario */
+    color: #000000;
+    /* Color del texto */
+    text-align: center;
+    /* Centra el texto */
+    margin-top: 10px;
+    /* Espaciado superior */
 }
 
 /* Estilo para el encabezado del ion-card */
 ion-card-header {
-    text-align: center; /* Centra el contenido del encabezado */
+    text-align: center;
+    /* Centra el contenido del encabezado */
 }
 
 /* Estilo para el contenido del ion-card */
 ion-card-content {
-    padding: 8px 16px; /* Espaciado interno del contenido */
+    padding: 8px 16px;
+    /* Espaciado interno del contenido */
 }
 
 /* Estilo para los elementos ion-item */
 ion-item {
-    --min-height: 44px; /* Altura mínima de los inputs */
-    margin-bottom: 12px; /* Espaciado entre los elementos */
+    --min-height: 44px;
+    /* Altura mínima de los inputs */
+    margin-bottom: 12px;
+    /* Espaciado entre los elementos */
 }
 
 /* Estilo para el botón de olvidar contraseña en el pie de página */
 ion-footer {
-    padding: 10px; /* Espaciado del pie de página */
+    padding: 10px;
+    /* Espaciado del pie de página */
 }
 
 /* Medias queries para dispositivos móviles */
 @media (max-width: 600px) {
     .login-container {
-        max-width: 280px; /* Cambiar según sea necesario */
+        max-width: 280px;
+        /* Cambiar según sea necesario */
     }
-    
+
     .glow-text {
-        font-size: 1.2em; /* Ajustar tamaño en móviles */
+        font-size: 1.2em;
+        /* Ajustar tamaño en móviles */
     }
 }
 
@@ -53,24 +71,39 @@ ion-footer {
 
 
 .img-duoc img {
-    width: 200px; /* Cambia el ancho según sea necesario */
-    height: auto; /* Mantiene la relación de aspecto */
-    border-radius: 15px; /* Bordes redondeados */
+    width: 200px;
+    /* Cambia el ancho según sea necesario */
+    height: auto;
+    /* Mantiene la relación de aspecto */
+    border-radius: 15px;
+    /* Bordes redondeados */
     display: block;
-    margin: 0 auto; /* Centra la imagen horizontalmente */
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra suave para mejor estética */
+    margin: 0 auto;
+    /* Centra la imagen horizontalmente */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    /* Sombra suave para mejor estética */
 }
 
 .custom-icon {
-    color: #000000; /* Cambia el color a blanco o al color que prefieras */
-    font-size: 1.5em; /* Ajusta el tamaño según tus preferencias */
-    cursor: pointer; /* Para que el puntero cambie al pasar sobre el ícono */
+    color: #000000;
+    /* Cambia el color a blanco o al color que prefieras */
+    font-size: 1.5em;
+    /* Ajusta el tamaño según tus preferencias */
+    cursor: pointer;
+    /* Para que el puntero cambie al pasar sobre el ícono */
 }
 
 .rounded-img {
-    border-radius: 15px; /* Cambia el valor según el grado de redondeo que desees */
-    width: 100%; /* Asegúrate de que la imagen se ajuste al contenedor si es necesario */
-    height: auto; /* Mantiene la proporción de la imagen */
+    border-radius: 15px;
+    /* Cambia el valor según el grado de redondeo que desees */
+    width: 100%;
+    /* Asegúrate de que la imagen se ajuste al contenedor si es necesario */
+    height: auto;
+    /* Mantiene la proporción de la imagen */
     max-width: 200px;
-  }
-  
+}
+
+
+.ion-margin-top {
+    margin-top: 20px;
+}
