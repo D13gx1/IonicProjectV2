@@ -35,5 +35,4 @@ export class EducationalLevel {
   static findLevel(id: number): EducationalLevel | undefined {
     return EducationalLevel.getLevels().find(level => level.id === id);
   }
-
 }
